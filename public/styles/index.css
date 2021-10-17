@@ -1,3 +1,6 @@
+bode{
+    background-color: #c9c9c9;
+}
 .table-list{
     width: 10%;
     float: left;
@@ -8,7 +11,7 @@
     padding: 0.5rem;
     border: 1px solid #9c9c9c;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 16px;
     margin-top: 5px;
     cursor: pointer;
 }
@@ -26,4 +29,6 @@
 table {
     border-spacing: 10px;
     overflow: scroll;
+    border: 1px solid #9c9c9c;
+    border-radius: 10px;
 }

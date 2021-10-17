@@ -1,7 +1,7 @@
 const data = JSON.parse(table_data.replaceAll('&#34;', '"'));
 for(const key in data){
     const item_div = document.createElement('div');
-    item_div.textContent = key;
+    item_div.textContent = data[key];
     item_div.className = "list-item";
     item_div.onclick = ()=>{
         document.querySelectorAll('.list-item').forEach(div=>{
@@ -9,15 +9,24 @@ for(const key in data){
         })
         item_div.style.backgroundColor ="#6e6e6e";
         document.querySelector('.table-content').innerHTML ="";
-        if(data[key].length > 0){
-            const tr =objToth(data[key][0]);
-            document.querySelector('.table-content').innerHTML+=tr;
-        }
-        for(let i=0;i<data[key].length;i++){
-            const row = data[key][i];
-            const tr = objTotr(row);
-            document.querySelector('.table-content').innerHTML+=tr;
-       }
+        document.querySelector('.content h2').textContent = data[key];
+        fetch(`./dashboard/${data[key]}`)
+        .then(res => res.json())
+        .then(data_list => {
+            if(data_list.length > 0){
+                const tr = objToth(data_list[0]);
+                document.querySelector('.table-content').innerHTML+=tr;
+                for(let i=0;i<data_list.length;i++){
+                    const row = data_list[i];
+                    const tr = objTotr(row);
+                    document.querySelector('.table-content').innerHTML+=tr;
+                }
+            }
+            else{
+                document.querySelector('.content h2').textContent = " No record";
+            }
+        });
+        
     }
     document.querySelector('.table-list').append(item_div);
 }

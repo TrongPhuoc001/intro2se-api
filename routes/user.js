@@ -47,6 +47,9 @@ router.post('/login', async (req,res) => {
     pool.query(
         `SELECT * FROM users
         WHERE email = $1;`,[email],async (err,result)=>{
+            if(err){
+                return res.status(400).json(err.routine);
+            }
             if(result.rows.length === 0 ){
                 return res.status(400).json({"message":"Email or password is invalid"});
             }
@@ -68,23 +71,13 @@ router.post('/register', async (req,res) => {
         return res.status(400).json({"message" :error.details[0].message})
     }
     const {name , email, password, type, gender, birth} = req.body;
-    console.log(
-        name,
-        email,
-        password,
-        type,
-        gender,
-        birth
-    );
-
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword);
     
     pool.query(
         `SELECT * FROM users
         WHERE email = $1;`, [email], (err,result)=>{
             if(err){
-                console.log(err);
+                return res.status(400).json(err);
             }
             if(result.rows.length > 0 ){
                 return res.status(400).json({"message": "email has already been taken"});

@@ -1,13 +1,13 @@
-const { Client } = require('pg');
+//heroku database
+const Pool = require("pg").Pool;
 
-const client = new Client({
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
+  ssl:{
     rejectUnauthorized: false
-  }
+  },
 });
-
-client.connect();
+//local
 // const Pool = require("pg").Pool;
 
 // const pool = new Pool({

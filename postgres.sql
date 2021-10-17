@@ -1,4 +1,3 @@
-CREATE DATABASE potality
 
 CREATE TABLE users(
     _id BIGSERIAL PRIMARY KEY,

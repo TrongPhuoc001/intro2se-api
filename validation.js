@@ -5,7 +5,7 @@ const registerValid = data => {
         name: Joi.string().min(6).required(),
         email: Joi.string().min(6).required().email(),
         password: Joi.string().min(6).required(),
-        type: Joi.number().integer().max(3).min(1),
+        type: Joi.number().integer().max(2).min(1),
         gender: Joi.string(),
         birth: Joi.string().max(10),
     });

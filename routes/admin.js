@@ -48,7 +48,6 @@ router.delete('/dashboard/:table_name/:record_id', (req,res)=>{
         `DELETE FROM ${req.params.table_name}
         WHERE _id=${req.params.record_id};`,(err,results)=>{
             if(err){
-                console.log(err);
                 return res.status(400).json(err.routine);
             }
             return res.status(200).json(results.rows);

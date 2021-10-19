@@ -23,8 +23,8 @@ for(const key in data){
         .then(data_list => {
             document.querySelector('.loader').style.display = 'none';
             if(data_list.length > 0){
-                const tr = tableHeader(data_list[0]);
-                document.querySelector('.table-content').innerHTML+=tr;
+                const tr_head = tableHeader(data_list[0]);
+                document.querySelector('.table-content').innerHTML+=tr_head;
                 for(let i=0;i<data_list.length;i++){
                     let tr_class = '';
                     if(i%2===0){
@@ -34,9 +34,9 @@ for(const key in data){
                         tr_class = ' class="odd-row"';
                     }
                     const row = data_list[i];
-                    let tr = objTotr(row);
-                    tr = tr.substring(0,3) + tr_class +tr.substring(3);
-                    document.querySelector('.table-content').innerHTML+=tr;
+                    let tr = objTotr(row,key);
+                    tr.className = tr_class;
+                    document.querySelector('.table-content').append(tr);
                 }
             }
             else{
@@ -56,7 +56,6 @@ document.querySelector('#add-btn').addEventListener('click', ()=>{
         input.value = '';
     });
     const tb_name = document.querySelector('#add-btn').dataset.tb_name;
-    const tr = objTotr(body_inp);  
     fetch(`./dashboard/${tb_name}`, {
         'method':'POST',
         headers: {
@@ -91,11 +90,29 @@ function tableHeader(obj){
     
     return tr;
 }
-function objTotr (obj){
-    let tr = '<tr>';
+function objTotr (obj, tb_name){
+    const tr = document.createElement('tr');
+    let id ='';
     for(key in obj){
-        tr+='<td>'+obj[key] + '</td>';
+        if(key === '_id'){
+            id = obj[key];
+        }
+        tr.innerHTML+='<td>'+obj[key] + '</td>';
     }
-    tr+='</tr>';
+    const tr_btn = document.createElement('td');
+    const btn = document.createElement('button');
+    btn.textContent = 'Delete';
+    btn.addEventListener('click', ()=>{
+        fetch(`./dashboard/${tb_name}/${id}`, {
+            method:'DELETE',
+        })
+        .then(res => res.json())
+        .then(mess=>{
+            console.log(mess);
+            document.querySelectorAll('.list-item').forEach(div=>{if(div.value===tb_name){div.click()}});
+        })
+    })
+    tr_btn.append(btn);
+    tr.append(tr_btn);
     return tr;
 }

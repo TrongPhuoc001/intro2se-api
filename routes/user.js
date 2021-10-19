@@ -13,8 +13,8 @@ router.get("/:userId/courses", verify, (req,res)=>{
     }
     if(req.user.type === 1){
         pool.query(
-            `SELECT name,time_start,time_end,day_study,fee FROM courses
-            WHERE creator_id=$1;`,[req.user._id],(err,result)=>{
+            `SELECT courses.name, subject_id,time_start,time_end,day_study FROM courses
+            WHERE creator_id=$1 AND subject._id = courses.subject_id;`,[req.user._id],(err,result)=>{
                 if(err){
                     return res.status(400).json(err.routine);
                 }
@@ -24,7 +24,7 @@ router.get("/:userId/courses", verify, (req,res)=>{
     }
     if(req.user.type === 2){
         pool.query(
-            `SELECT name,time_start,time_end,day_study,fee FROM courses,courses_stu 
+            `SELECT courses.name, subject_id,time_start,time_end,day_study FROM courses, courses_stu
             WHERE courses_stu.stu_id=$1 
             AND courses_stu.course_id = courses._id;`,[req.user._id],(err,result)=>{
                 if(err){

@@ -19,7 +19,7 @@ app.use("/course", courseRoute);
 app.use('/admin', adminRoute)
 
 app.get('/' , (req , res)=>{
-   res.send('hello from intro2se api :)');
+   res.send('hello from intro2se api :) how to use this api : https://github.com/TrongPhuoc001/intro2se-api');
 })
 
 

@@ -4,7 +4,30 @@ const verify = require("../verifyToken");
 const { courseValid } = require("../validation");
 const router = express.Router();
 
-router.get("/:courseId", verify, (req,res) => {
+router.get('/all', verify, (req,res)=>{
+    pool.query(
+        `SELECT _id, name, subject_id, time_start, time_end, day_stu, max_solt, fee, curr_state FROM courses;`,
+        (err,result)=>{
+            if(err){
+                return res.status(400).json(err.routine);
+            }
+            return res.status(200).json(result.rows);
+        }
+    )
+})
+router.get('/available', verify, (req,res)=>{
+    pool.query(
+        `SELECT _id, name, subject_id, time_start, time_end, day_stu, fee FROM courses
+        WHERE curr_state=0;`,(err,result)=>{
+            if(err){
+                return res.status(400).json(err.routine);
+            }
+            return res.status(200).json(result.rows);
+        }
+    )
+})
+
+router.get("/:courseId", (req,res) => {
     pool.query(
         `SELECT * FROM courses
         WHERE _id=$1;`,[req.params.courseId],(err,result)=>{

@@ -1,3 +1,4 @@
+// thư viện
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
@@ -7,8 +8,9 @@ const courseRoute = require("./routes/course");
 const adminRoute = require('./routes/admin')
 dotenv.config();
 
-
+// 
 app.set('view engine', 'ejs');
+
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))

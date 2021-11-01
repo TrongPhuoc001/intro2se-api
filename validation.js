@@ -7,7 +7,8 @@ const registerValid = data => {
         password: Joi.string().min(6).required(),
         type: Joi.number().integer().max(2).min(1),
         gender: Joi.string(),
-        birth: Joi.string().max(10),
+        birthday: Joi.string().max(10),
+        address: Joi.string().max(255)
     });
     return schema.validate(data);
 }

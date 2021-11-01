@@ -45,7 +45,7 @@ router.post('/login', async (req,res) => {
     }
     const {email, password} = req.body;
     pool.query(
-        `SELECT * FROM users
+        `SELECT * FROM "user"
         WHERE email = $1;`,[email],async (err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
@@ -70,11 +70,11 @@ router.post('/register', async (req,res) => {
     if(error){
         return res.status(400).json({"message" :error.details[0].message})
     }
-    const {name , email, password, type, gender, birth} = req.body;
+    const {name , email, password, type, gender, birthday, address} = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
     pool.query(
-        `SELECT * FROM users
+        `SELECT * FROM "user"
         WHERE email = $1;`, [email], (err,result)=>{
             if(err){
                 return res.status(400).json(err);
@@ -84,8 +84,8 @@ router.post('/register', async (req,res) => {
             }
             else {
                 pool.query(
-                    `INSERT INTO users(name,email,password,type, gender, birth)
-                    VALUES ($1,$2,$3,$4,$5,$6);`, [name,email,hashedPassword,parseInt(type),gender,birth], (err,result)=>{
+                    `INSERT INTO "user"(name,email,password,type, gender, birthday, address)
+                    VALUES ($1,$2,$3,$4,$5,$6,$7);`, [name,email,hashedPassword,parseInt(type),gender,birthday,address], (err,result)=>{
                         if(err){
                             return res.json(err);
                         }

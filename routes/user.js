@@ -11,7 +11,7 @@ router.get("/:userId/courses", verify, (req,res)=>{
     if(req.user._id != req.params.userId){
         return res.status(400).json({"message" : "token not match user"})
     }
-    if(req.user.type === 2){
+    if(req.user.type === 1){
         pool.query(
             `SELECT course_name, subject_id,time_start,time_end,day_study FROM course
             WHERE teacher_id=$1`,[req.user._id],(err,result)=>{
@@ -22,7 +22,7 @@ router.get("/:userId/courses", verify, (req,res)=>{
             }
         )
     }
-    if(req.user.type === 3){
+    if(req.user.type === 2){
         pool.query(
             `SELECT course_name, subject_id,time_start,time_end,day_study FROM course, student_course
             WHERE student_id=$1 

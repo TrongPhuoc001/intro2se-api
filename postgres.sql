@@ -18,7 +18,13 @@ create table public."user"(
 	email VARCHAR(255) NOT NULL UNIQUE,
 	gender VARCHAR(255) NOT NULL,
 	birthday date NOT NULL,
-	address VARCHAR(255) DEFAULT 'Việt Nam'
+	address VARCHAR(255) DEFAULT 'Viet Nam'
+);
+
+create table "admin"(
+	_id serial PRIMARY KEY,
+	admin_name VARCHAR(255) NOT NULL UNIQUE,
+	password VARCHAR(255) NOT NULL
 );
 
 create table type_user(
@@ -83,12 +89,12 @@ ALTER TABLE course_task ADD CONSTRAINT FK_CourseTask_Course FOREIGN KEY (course_
 ALTER TABLE student_course ADD CONSTRAINT FK_StudentCourse_Student FOREIGN KEY (student_id) REFERENCES public."user"(_id);
 
 insert into type_user(type_name) values
-('admin'),
 ('teacher'),
 ('student');
 
-insert into "user" (user_name,password,type,email,gender,birthday,address) 
-values ('Admin','admin',1,'admin@gmail.com','Bi','2001-01-01','HCMUS');
+insert into "admin" (admin_name,password) 
+values ('admin','admin');
+
 
 insert into "user" (user_name,password,type,email,gender,birthday,address) 
 values 

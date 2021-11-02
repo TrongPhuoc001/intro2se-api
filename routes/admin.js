@@ -83,10 +83,10 @@ router.post('/dashboard/:table_name', async (req,res)=>{
         if(error){
             return res.status(400).json({"message" :error.details[0].message});
         }
-        const {course_name, subject_id, time_start, time_end, day_study,day_start, day_end, max_slot,fee} = req.body;
+        const {course_name,teacher_id, subject_id, time_start, time_end, day_study,day_start, day_end, max_slot,fee} = req.body;
         pool.query(
             `INSERT INTO course(course_name, teacher_id, subject_id, time_start, time_end, day_study,day_start, day_end, max_slot,fee)
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`, [course_name,req.user._id, subject_id, time_start, time_end, day_study,day_start, day_end, max_slot,fee], (err,result)=>{
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);`, [course_name,teacher_id, subject_id, time_start, time_end, day_study,day_start, day_end, max_slot,fee], (err,result)=>{
                 if(err){
                     return res.json(err.routine);
                 }
@@ -145,6 +145,32 @@ router.post('/dashboard/:table_name', async (req,res)=>{
                         }
                     )
                 }
+            }
+        )
+    }
+    else if (tb_name==='course_task'){
+        const {course_id, content, task_endtime}= req.body;
+        pool.query(
+            `INSERT INTO course_task(course_id,content,task_endtime)
+            VALUES ($1,$2,$3)`, [course_id,content, task_endtime],
+            (err,result)=>{
+                if(err){
+                    return res.status(400).json(err.routine)
+                }
+                return res.status(200).json({message:"Create success"})
+            }
+        )
+    }
+    else if(tb_name==='discuss'){
+        const {user_id,course_id,content} = req.body;
+        pool.query(
+            `INSERT INTO discuss(user_id,course_id,content)
+            VALUES ($1,$2,$3)`,[user_id,course_id,content],
+            (err,result)=>{
+                if(err){
+                    return res.status(400).json(err.routine);
+                }
+                return res.status(200).json({message:"Create success"});
             }
         )
     }

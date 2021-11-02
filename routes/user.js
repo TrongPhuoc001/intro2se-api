@@ -11,10 +11,10 @@ router.get("/:userId/courses", verify, (req,res)=>{
     if(req.user._id != req.params.userId){
         return res.status(400).json({"message" : "token not match user"})
     }
-    if(req.user.type === 1){
+    if(req.user.type === 2){
         pool.query(
-            `SELECT courses.name, subject_id,time_start,time_end,day_study FROM courses
-            WHERE creator_id=$1 AND subject._id = courses.subject_id;`,[req.user._id],(err,result)=>{
+            `SELECT course_name, subject_id,time_start,time_end,day_study FROM course
+            WHERE teacher_id=$1`,[req.user._id],(err,result)=>{
                 if(err){
                     return res.status(400).json(err.routine);
                 }
@@ -22,11 +22,11 @@ router.get("/:userId/courses", verify, (req,res)=>{
             }
         )
     }
-    if(req.user.type === 2){
+    if(req.user.type === 3){
         pool.query(
-            `SELECT courses.name, subject_id,time_start,time_end,day_study FROM courses, courses_stu
-            WHERE courses_stu.stu_id=$1 
-            AND courses_stu.course_id = courses._id;`,[req.user._id],(err,result)=>{
+            `SELECT course_name, subject_id,time_start,time_end,day_study FROM course, student_course
+            WHERE student_id=$1 
+            AND course_id = course._id;`,[req.user._id],(err,result)=>{
                 if(err){
                     return res.status(400).json(err);
                 }
@@ -70,7 +70,7 @@ router.post('/register', async (req,res) => {
     if(error){
         return res.status(400).json({"message" :error.details[0].message})
     }
-    const {name , email, password, type, gender, birthday, address} = req.body;
+    const {name , email, password, type, gender, birthday} = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     
     pool.query(
@@ -84,8 +84,8 @@ router.post('/register', async (req,res) => {
             }
             else {
                 pool.query(
-                    `INSERT INTO "user"(name,email,password,type, gender, birthday, address)
-                    VALUES ($1,$2,$3,$4,$5,$6,$7);`, [name,email,hashedPassword,parseInt(type),gender,birthday,address], (err,result)=>{
+                    `INSERT INTO "user"(user_name,email,password,type, gender, birthday)
+                    VALUES ($1,$2,$3,$4,$5,$6,$7);`, [name,email,hashedPassword,parseInt(type),gender,birthday], (err,result)=>{
                         if(err){
                             return res.json(err);
                         }
@@ -97,9 +97,12 @@ router.post('/register', async (req,res) => {
     )
 });
 
-router.delete("/delete", verify,(req,res)=>{
+router.delete("/:user_id/delete", verify,(req,res)=>{
+    if(req.user._id != req.params.user_id){
+        return res.status(400).json({"message":"Token not match user"});
+    }
     pool.query(
-        `DELETE FROM users
+        `DELETE FROM "user"
         WHERE _id=$1`,[req.user._id],(err,result)=>{
             if(err){
                 return res.status(400).json(err);

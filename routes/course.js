@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/all', verify, (req,res)=>{
     pool.query(
-        `SELECT _id, name, subject_id, time_start, time_end, day_stu, max_solt, fee, curr_state FROM courses;`,
+        `SELECT _id, course_name, subject_id, time_start, time_end, day_stu, day_start, max_slot, fee, curr_state FROM course;`,
         (err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
@@ -46,15 +46,15 @@ router.post("/:userId/sign", verify, (req,res) => {
     if(req.user._id != req.params.userId){
         return res.status(400).json({"message" : "token not match user"})
     }
-    if(req.user.type === 1){
+    if(req.user.type === 2){
         const {error} = courseValid(req.body);
         if(error){
             return res.status(400).json({"message" :error.details[0].message});
         }
-        const {name, subject_id, time_start, time_end, day_study, max_slot,fee} = req.body;
+        const {name, subject_id, time_start, time_end, day_study, day_start, day_end, max_slot,fee} = req.body;
         pool.query(
-            `INSERT INTO courses(name, creator_id, subject_id, time_start, time_end, day_study, max_slot,fee)
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`, [name,req.user._id, subject_id, time_start, time_end, day_study, max_slot,fee], (err,result)=>{
+            `INSERT INTO course(course_name, teacher_id, subject_id, time_start, time_end, day_study, day_start, day_end, max_slot,fee)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);`, [name,req.user._id, subject_id, time_start, time_end, day_study, day_start, day_end, max_slot,fee], (err,result)=>{
                 if(err){
                     return res.json(err.routine);
                 }
@@ -65,7 +65,7 @@ router.post("/:userId/sign", verify, (req,res) => {
     if(req.user.type === 2){
         const {courseId} = req.query;
         pool.query(
-            `SELECT curr_state, max_slot FROM courses
+            `SELECT curr_state, max_slot FROM course
             WHERE _id = $1;`,[courseId],
             (err,result)=>{
                 if(err){
@@ -74,14 +74,14 @@ router.post("/:userId/sign", verify, (req,res) => {
                 course_state = result.rows[0];
                 if(parseInt(course_state.curr_state) === 0){
                     pool.query(
-                        `SELECT COUNT(*) FROM courses_stu 
+                        `SELECT COUNT(*) FROM student_course
                         WHERE course_id=$1;`,[courseId],(err,result)=>{
                             if(err){
                                 return res.status(400).json(err.routine);
                             }
                             if(result.rows[0].count < course_state.max_slot){
                                 pool.query(
-                                    `INSERT INTO courses_stu(stu_id,course_id)
+                                    `INSERT INTO student_course(student_id,course_id)
                                     VALUES ($1,$2);`,[req.user._id,courseId],(err,results)=>{
                                         if(err){
                                             return res.status(400).json(err.routine);
@@ -106,9 +106,9 @@ router.delete("/:userId/unsign/:courseId", verify, (req,res) => {
     if(req.user._id != userId){
         return res.status(400).json({"message" : "token not match user"})
     }
-    if(req.user.type === 1){
+    if(req.user.type === 2){
         pool.query(
-            `SELECT * FROM courses
+            `SELECT * FROM course
             WHERE _id = $1;`,[courseId],(err,result)=>{
                 if(err){
                     return res.status(400).json(err.routine);
@@ -119,7 +119,7 @@ router.delete("/:userId/unsign/:courseId", verify, (req,res) => {
                 const course = result.rows[0];
                 if(req.user._id === course.creator_id){
                     pool.query(
-                        `DELETE FROM courses
+                        `DELETE FROM course
                         WHERE _id = $1;`,[req.params.courseId],(err,result)=>{
                             if(err){
                                 return res.status(400).json(err.routine);
@@ -131,7 +131,7 @@ router.delete("/:userId/unsign/:courseId", verify, (req,res) => {
             }
         )
     }
-    if(req.user.type === 2){
+    if(req.user.type === 3){
         pool.query(
             `DELETE FROM courses_stu
             WHERE stu_id = $1 AND course_id = $2;`,[req.user._id,courseId],

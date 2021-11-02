@@ -1,24 +1,23 @@
 const data = JSON.parse(table_data.replaceAll('&#34;', '"'));
 
-
 for(const key in data){
     const item_div = document.createElement('div');
-    item_div.textContent = key;
+    item_div.textContent = data[key].table_name;
     item_div.className = "list-item";
-    item_div.value = key;
+    item_div.value = data[key].table_name;
     item_div.onclick = ()=>{ 
-        document.querySelector('#add-btn').setAttribute('data-tb_name',key);
+        document.querySelector('#add-btn').setAttribute('data-tb_name',data[key].table_name);
         document.querySelectorAll('.list-item').forEach(div=>{
             div.style.backgroundColor = "inherit";
         })
         item_div.style.backgroundColor ="#6e6e6e";
         document.querySelector('.table-content').innerHTML ="";
         document.querySelector('.form').innerHTML = '';
-        document.querySelector('.content h2').textContent = key;
+        document.querySelector('.content h2').textContent = data[key].table_name;
         document.querySelector('.loader').style.display = 'block';      
-        const form = makeInput(data[key])
+        const form = makeInput(data[key].columns)
         document.querySelector('.form').innerHTML+=form;
-        fetch(`./dashboard/${key}`)
+        fetch(`./dashboard/${data[key].table_name}`)
         .then(res => res.json())
         .then(data_list => {
             document.querySelector('.loader').style.display = 'none';
@@ -51,7 +50,7 @@ for(const key in data){
 document.querySelector('#add-btn').addEventListener('click', ()=>{
     const body_inp = {};
     document.querySelectorAll('.add-form input').forEach(input=>{
-        if(input.value === '') return;
+        if(input.value === '' ) return;
         body_inp[`${input.name}`] = input.value;
         input.value = '';
     });

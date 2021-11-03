@@ -17,11 +17,11 @@ fetch("http://intro2se-api.herokuapp.com/user/register", {
   method: POST,
   body: {
     name: "Nguyễn Trọng Phước",
-    email: "phuoc2@pmail.com",
+    email: "phuoc@pmail.com",
     password: "phuoc1903",
     type: 1,
     gender: "male",
-    birth: "19/03/2001",
+    birthday: "19/03/2001",
   },
 });
 ```
@@ -65,7 +65,7 @@ fetch("http://intro2se-api.herokuapp.com/user/login", {
     "Content-Type": "application/json",
   },
   method: POST,
-  body: { email: "phuoc2@pmail.com", password: "phuoc1903" },
+  body: { email: "phuoc@pmail.com", password: "phuoc1903" },
 });
 ```
 
@@ -87,7 +87,7 @@ Response.body :
         "password": "$2a$10$2zjjzTfrftmx5i0dsu1soOM7Sxvzzl4sBc85ayS/eFqoQXEc3bVuy",
         "type": 2,
         "gender": "male",
-        "birth": "19/03/2001"
+        "birthday": "19/03/2001"
     }
 }
 ```
@@ -127,6 +127,8 @@ Get success
     time_start: "07:30:00",
     time_end: "11:00:00",
     day_study: 6,
+    day_start:"2021-08-24",
+    day_end:"2021-12-24"
   },
 ];
 ```

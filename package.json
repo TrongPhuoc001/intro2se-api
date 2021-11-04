@@ -19,7 +19,10 @@
     "express": "^4.17.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.13",
+    "markdown-to-html": "0.0.13",
     "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
   }
 }

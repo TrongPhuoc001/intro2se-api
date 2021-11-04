@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const registerValid = data => {
     const schema = Joi.object({
-        user_name: Joi.string().min(6).required(),
+        name: Joi.string().min(6).required(),
         email: Joi.string().min(6).required().email(),
         password: Joi.string().min(6).required(),
         type: Joi.number().integer().max(2).min(1),
@@ -25,7 +25,6 @@ const courseValid = data => {
     const schema = Joi.object({
         course_name : Joi.string().min(6).required(),
         subject_id : Joi.number().integer(),
-        teacher_id : Joi.number().integer().required(),
         time_start : Joi.string().min(4).required(),
         time_end : Joi.string().min(4).required(),
         day_study : Joi.number().integer().max(8).min(2),

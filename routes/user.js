@@ -67,7 +67,7 @@ router.post('/login', async (req,res) => {
 
 router.post('/register', async (req,res) => {
     const {error} = registerValid(req.body);
-    if(error){
+    if(error){ 
         return res.status(400).json({"message" :error.details[0].message})
     }
     const {name , email, password, type, gender, birthday} = req.body;
@@ -85,7 +85,7 @@ router.post('/register', async (req,res) => {
             else {
                 pool.query(
                     `INSERT INTO "user"(user_name,email,password,type, gender, birthday)
-                    VALUES ($1,$2,$3,$4,$5,$6,$7);`, [name,email,hashedPassword,parseInt(type),gender,birthday], (err,result)=>{
+                    VALUES ($1,$2,$3,$4,$5,$6);`, [name,email,hashedPassword,parseInt(type),gender,birthday], (err,result)=>{
                         if(err){
                             return res.json(err);
                         }

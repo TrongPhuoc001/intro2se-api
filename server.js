@@ -6,6 +6,8 @@ const PORT = process.env.PORT || 3000;
 const userRoute = require("./routes/user");
 const courseRoute = require("./routes/course");
 const adminRoute = require('./routes/admin')
+const Markdown = require('markdown-to-html').Markdown;
+const fs = require('fs');
 dotenv.config();
 
 // 
@@ -15,13 +17,23 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 // middlewere
-app.use(express.json());
 app.use("/user", userRoute);
 app.use("/course", courseRoute);
 app.use('/admin', adminRoute)
 
 app.get('/' , (req , res)=>{
-   res.send('hello from intro2se api :) how to use this api : https://github.com/TrongPhuoc001/intro2se-api');
+   const md = new Markdown();
+   md.bufmax = 2048;
+   const fileName = __dirname + '/README.md';
+   const opts = {title: 'Read Me', stylesheet: 'styles/readme.css'};
+   // Write a header.
+   md.render(fileName, opts, function(err) {
+      if (err) {
+         console.error('>>>' + err);
+         process.exit();
+      }
+      md.pipe(res);
+   });
 })
 
 

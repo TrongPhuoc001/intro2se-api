@@ -1,12 +1,14 @@
+Welcome to intro2se-api :)  link github : 'https://github.com/TrongPhuoc001/intro2se-api/tree/master '
+
 # Routes
 
 ## User routes
 
-Main url : 'http://intro2se-api.herokuapp.com/user'
+Main url : 'http://intro2se-api.herokuapp.com/user '
 
 ### Register
 
-Url : 'http://intro2se-api.herokuapp.com/user/register'  
+Url : 'http://intro2se-api.herokuapp.com/user/register '   
 Method : POST
 
 ```javascript
@@ -17,11 +19,11 @@ fetch("http://intro2se-api.herokuapp.com/user/register", {
   method: POST,
   body: {
     name: "Nguyễn Trọng Phước",
-    email: "phuoc2@pmail.com",
+    email: "phuoc@pmail.com",
     password: "phuoc1903",
     type: 1,
     gender: "male",
-    birth: "19/03/2001",
+    birth: "2001-03-19",
   },
 });
 ```
@@ -57,7 +59,7 @@ Create success will get response in status 200 and message
 
 ### Login
 
-Url : 'http://intro2se-api.herokuapp.com/user/login'
+Url : 'http://intro2se-api.herokuapp.com/user/login '
 
 ```javascript
 fetch("http://intro2se-api.herokuapp.com/user/login", {
@@ -65,7 +67,7 @@ fetch("http://intro2se-api.herokuapp.com/user/login", {
     "Content-Type": "application/json",
   },
   method: POST,
-  body: { email: "phuoc2@pmail.com", password: "phuoc1903" },
+  body: { email: "phuochs@pmail.com", password: "phuoc1903" },
 });
 ```
 
@@ -75,36 +77,37 @@ token in Response.header :
 "Auth" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIzIiwidHlwZSI6MiwiaWF0IjoxNjM0NjUxMTY3fQ.e4ujo04URPb0LMcCJNfURebeUFzz3kI3heQoLdHCDfM"
 ```
 
-Response.body :
+Response.body :  
 
 ```javascript
 {
     "message": "Login successful!",
     "user": {
         "_id": "3",
-        "name": "Nguyễn Trọng Phước",
-        "email": "phuoc2@pmail.com",
+        "name": "Phước học sinh",
+        "email": "phuochs@pmail.com",
         "password": "$2a$10$2zjjzTfrftmx5i0dsu1soOM7Sxvzzl4sBc85ayS/eFqoQXEc3bVuy",
         "type": 2,
         "gender": "male",
-        "birth": "19/03/2001"
+        "birthday": "2001-03-18T17:00:00.000Z",,
+        "address": "Viet Nam"
     }
 }
 ```
 
-add token in request.header with "auth" key for other user and course api
+add token in request.header with "auth" key for other user and course api  
 
 ### User course
 
-URL : 'http://intro2se-api.herokuapp.com/user/<user_id>/courses'  
-TOKEN require
-add token in header
-Example
+URL : 'http://intro2se-api.herokuapp.com/user/:user_id/courses '  
+TOKEN require  
+add token in header  
+Example  
 
 ```javascript
 fetch("http://intro2se-api.herokuapp.com/user/3/courses", {
   header: {
-    auth: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIzIiwidHlwZSI6MiwiaWF0IjoxNjM0NjUxMTY3fQ.e4ujo04URPb0LMcCJNfURebeUFzz3kI3heQoLdHCDfM",
+    auth: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjMsInR5cGUiOjIsImlhdCI6MTYzNTk4Nzg4N30.5G8SzB6aO-35hQ1rQgBKYOAX5x8f6Xkb2f3gyh8bKHg",
   },
 });
 ```
@@ -117,41 +120,117 @@ Error not add token or token not match user_id, response status = 401
 }
 ```
 
-Get success
-
+Get success  
+RESPONSE
 ```javascript
 [
-  {
-    name: "intro 2 SE",
-    subject_id: 1,
-    time_start: "07:30:00",
-    time_end: "11:00:00",
-    day_study: 6,
-  },
-];
+    {
+        "course_name": "Nhập Môn Lập Trình",
+        "subject_id": 1,
+        "time_start": "07:30:00",
+        "time_end": "11:30:00",
+        "day_study": 2
+    },
+    {
+        "course_name": "Cơ sở dữ liệu",
+        "subject_id": 2,
+        "time_start": "07:30:00",
+        "time_end": "11:00:00",
+        "day_study": 3
+    }
+]
 ```
 
 ### Delete user
 
-URL : "http://intro2se-api.herokuapp.com/user/delete"
-METHOD : DELETE
-TOKEN require
+URL : "http://intro2se-api.herokuapp.com/user/delete "  
+METHOD : DELETE  
+TOKEN require  
 
 ## Course route
 
 ### All courses
 
-URL : "http://intro2se-api.herokuapp.com/course/all"  
-TOKEN require
+URL : "http://intro2se-api.herokuapp.com/course/all "   
+TOKEN require  
+
+OUT PUT  
+```javascript
+[
+    {
+        "_id": 1,
+        "course_name": "Nhập Môn Lập Trình",
+        "subject_id": 1,
+        "time_start": "07:30:00",
+        "time_end": "11:30:00",
+        "day_study": 2,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-08-23T17:00:00.000Z",
+        "max_slot": 100,
+        "fee": "$1,000,000.00",
+        "curr_state": 1
+    },
+    {
+        "_id": 2,
+        "course_name": "Cơ sở dữ liệu",
+        "subject_id": 2,
+        "time_start": "07:30:00",
+        "time_end": "11:00:00",
+        "day_study": 3,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "max_slot": 100,
+        "fee": "$1,000,000.00",
+        "curr_state": 0
+    }
+]
+```
+### Start course  
+URL: "http://intro2se-api.herokuapp.com/course/:user_id/start?courseId=:course_id "  
+TOKEN REQUIRE  
+METHOD : PUT  
+
+REQUEST  
+```javascript
+fetch("http://intro2se-api.herokuapp.com/course/1/start?courseId=1", {
+  header: {
+    auth: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjMsInR5cGUiOjIsImlhdCI6MTYzNTk4Nzg4N30.5G8SzB6aO-35hQ1rQgBKYOAX5x8f6Xkb2f3gyh8bKHg",
+  },
+});
+```
+
+PUT SUCCESS  
+```javascript
+{
+    "message": "Course start"
+}
+```
 
 ### Available courses
 
-URL : "http://intro2se-api.herokuapp.com/course/available"  
-TOKEN require
+URL : "http://intro2se-api.herokuapp.com/course/available "  
+TOKEN require  
+
+OUT PUT  
+```javascript
+[
+    {
+        "_id": 2,
+        "course_name": "Cơ sở dữ liệu",
+        "subject_id": 2,
+        "time_start": "07:30:00",
+        "time_end": "11:00:00",
+        "day_study": 3,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "fee": "$1,000,000.00"
+    }
+]
+```
 
 ### Sign in a course
 
-URL : "http://intro2se-api.herokuapp.com/course/<user_id>/sign"  
+URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign "  
 METHOD : POST  
 TOKEN require
 
@@ -167,14 +246,16 @@ fetch("http://intro2se-api.herokuapp.com/course/1/sign", {
   },
   method: POST,
   body: {
-    name: "Intro2 SE",
-    subject_id: 1,
-    time_start: "07:30",
-    time_end: "11:00",
-    day_study: 6,
-    max_slot: 30,
-    fee: 1000000,
-  },
+    "course_name": "Cơ sở dữ liệu", 
+    "subject_id": 2, 
+    "time_start": "07:30", 
+    "time_end":"11:00", 
+    "day_study": 3, 
+    "day_start": "2021-08-24", 
+    "day_end": "2021-12-24", 
+    "max_slot": 100,
+    "fee": 1000000
+},
 });
 ```
 
@@ -184,10 +265,10 @@ status 200 is success
 #### If user type 2 aka student
 
 this api will sign this user to the course
-URL : "http://intro2se-api.herokuapp.com/course/<user_id>/sign?courseId=<course_id>"
+URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign?courseId=:course_id "  
 
 ### Unsign
 
-URL : "http://intro2se-api.herokuapp.com/course/<user_id>/unsign/<course_id>"  
+URL : "http://intro2se-api.herokuapp.com/course/:user_id/unsign/:course_id "  
 METHOD : DELETE
 TOKEN require

@@ -1,0 +1,16 @@
+body{
+    padding-left: 5rem;
+    padding-right: 5rem;
+    background-color: #212121;
+    color: #fafafa;
+    font-size: large;
+}
+a{
+    color: rgb(60, 60, 248);
+}
+pre{
+    background-color: rgb(43, 28, 1);
+    padding: 1rem;
+    border-radius: 15px;
+    text-overflow: clip;
+}

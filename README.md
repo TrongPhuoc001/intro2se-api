@@ -23,7 +23,7 @@ fetch("http://intro2se-api.herokuapp.com/user/register", {
     password: "phuoc1903",
     type: 1,
     gender: "male",
-    birth: "2001-03-19",
+    birthday: "2001-03-19",
   },
 });
 ```
@@ -124,6 +124,7 @@ Get success
 RESPONSE
 ```javascript
 [
+<<<<<<< HEAD
     {
         "course_name": "Nhập Môn Lập Trình",
         "subject_id": 1,

@@ -152,8 +152,8 @@ TOKEN require
 
 ### All courses
 
-URL : "http://intro2se-api.herokuapp.com/course/all "   
-TOKEN require  
+URL : "http://intro2se-api.herokuapp.com/course/all?page=... "  
+{?page} is OPTIONAL, 0 by DEFAULT  
 
 OUT PUT  
 ```javascript
@@ -209,8 +209,9 @@ PUT SUCCESS
 
 ### Available courses
 
-URL : "http://intro2se-api.herokuapp.com/course/available "  
-TOKEN require  
+URL : "http://intro2se-api.herokuapp.com/course/available?page=... "   
+
+{?page} is optional, 0 by DEFAULT  
 
 OUT PUT  
 ```javascript
@@ -229,6 +230,94 @@ OUT PUT
 ]
 ```
 
+### Search availble by course_name  
+URL : "http://intro2se-api.herokuapp.com/course/search?q=:searchString&page=... "   
+{q} : empty string by DEFAULT => get all availble course  
+{page} : OPTIONAL, 0 by DEFAULT  
+
+Example  
+REQUEST  
+```javascript
+fetch("http://intro2se-api.herokuapp.com/course/search?q=lập ");
+```
+
+OUT PUT  
+```javascript
+[
+    {
+        "_id": 4,
+        "course_name": "Kĩ Thuật Lập Trình",
+        "subject_id": 1,
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 6,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "fee": "$3,000,000.00"
+    },
+    {
+        "_id": 5,
+        "course_name": "Lập Trình Hướng Đối Tượng",
+        "subject_id": 1,
+        "time_start": "07:30:00",
+        "time_end": "10:30:00",
+        "day_study": 6,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "fee": "$3,000,000.00"
+    },
+    {
+        "_id": 1,
+        "course_name": "Nhập Môn Lập Trình",
+        "subject_id": 1,
+        "time_start": "07:30:00",
+        "time_end": "11:30:00",
+        "day_study": 2,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-08-23T17:00:00.000Z",
+        "fee": "$1,000,000.00"
+    }
+]
+```
+
+### Search by subject 
+URL : "http://intro2se-api.herokuapp.com/course/search/subject?q=:subjectId&page=... "  
+{q} subject id REQUIRE    
+{page} OPTIONAL, 0 by DEFAULT  
+
+Example  
+REQUEST  
+```javascript
+fetch("http://intro2se-api.herokuapp.com/course/search/subject?q=3 ");
+```
+
+OUT PUT  
+```javascript
+[
+    {
+        "_id": 8,
+        "course_name": "Hệ Thống Máy Tính",
+        "subject_id": 3,
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 6,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "fee": "$3,000,000.00"
+    },
+    {
+        "_id": 9,
+        "course_name": "Hệ Điều Hành",
+        "subject_id": 3,
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 6,
+        "day_start": "2021-08-23T17:00:00.000Z",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "fee": "$3,000,000.00"
+    }
+]
+```
 ### Sign in a course
 
 URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign "  

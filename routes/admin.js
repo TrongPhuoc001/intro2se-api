@@ -54,7 +54,7 @@ router.get('/dashboard',check_auth,(req,res)=>{
 })
 router.get('/dashboard/:table_name', (req,res)=>{
     pool.query(
-        `SELECT * FROM "${req.params.table_name}";`,(err,results)=>{
+        `SELECT * FROM "${req.params.table_name}" ORDER BY _id DESC;`,(err,results)=>{
             if(err){
                 console.log(err);
                 return res.status(400).json(err.routine);

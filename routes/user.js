@@ -24,7 +24,7 @@ router.get("/:userId/courses", verify, (req,res)=>{
     }
     if(req.user.type === 2){
         pool.query(
-            `SELECT course_name, subject_id,time_start,time_end,day_study FROM course, student_course
+            `SELECT course_name, subject_id,time_start,time_end,day_study, curr_state FROM course, student_course
             WHERE student_id=$1 
             AND course_id = course._id;`,[req.user._id],(err,result)=>{
                 if(err){

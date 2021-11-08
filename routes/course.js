@@ -4,9 +4,14 @@ const verify = require("../verifyToken");
 const { courseValid } = require("../validation");
 const router = express.Router();
 
-router.get('/all', verify, (req,res)=>{
+
+const limit = 10;
+
+router.get('/all', (req,res)=>{
+    const page = req.query.page||0;
+    console.log(page);
     pool.query(
-        `SELECT _id, course_name, subject_id, time_start, time_end, day_study, day_start,day_end, max_slot, fee, curr_state FROM course;`,
+        `SELECT _id, course_name, subject_id, time_start, time_end, day_study, day_start,day_end, max_slot, fee, curr_state FROM course ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,parseInt(page)],
         (err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
@@ -15,14 +20,57 @@ router.get('/all', verify, (req,res)=>{
         }
     )
 })
-router.get('/available', verify, (req,res)=>{
+router.get('/available', (req,res)=>{
+    const page = req.query.page||0;
     pool.query(
         `SELECT _id, course_name, subject_id, time_start, time_end, day_study,day_start,day_end, fee FROM course
-        WHERE curr_state=0;`,(err,result)=>{
+        WHERE curr_state=0 ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,page],(err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
             }
             return res.status(200).json(result.rows);
+        }
+    )
+})
+
+router.get('/subject',(req,res)=>{
+    pool.query(
+        `SELECT * FROM subject;`,(err,result)=>{
+            if(err){
+                return res.status(400).json(err.routine);
+            }
+            return res.status(200).json(result.rows);
+        }
+    )
+})
+
+router.get('/search', (req,res)=>{
+    const q ='%'+ (req.query.q||'').toLowerCase() + '%';
+    const page = req.querypage||0; 
+    pool.query(
+        `SELECT _id, course_name, subject_id, time_start, time_end, day_study,day_start,day_end, fee FROM course
+        WHERE lower(course_name) LIKE $1 ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,page],
+        (err,result)=>{
+            if(err){
+                return res.status(400).json(err.routine);
+            }
+            return res.json(result.rows);
+        }
+    )
+})
+
+router.get('/search/subject',(req,res)=>{
+    const {q} = req.query;
+    const page = req.query.page || 0;
+
+    pool.query(
+        `SELECT _id, course_name, subject_id, time_start, time_end, day_study,day_start,day_end, fee FROM course
+        WHERE subject_id=$1 ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,page],
+        (err,result)=>{
+            if(err){
+                return res.status(400).json(err.routine);
+            }
+            return res.json(result.rows);
         }
     )
 })

@@ -1,4 +1,4 @@
-Welcome to intro2se-api :)  link github : 'https://github.com/TrongPhuoc001/intro2se-api/tree/master '
+Welcome to intro2se-api :)  link github : 'https://github.com/TrongPhuoc001/intro2se-api '
 
 # Routes
 

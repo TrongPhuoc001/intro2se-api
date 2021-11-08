@@ -49,7 +49,7 @@ router.get('/search', (req,res)=>{
     const page = req.querypage||0; 
     pool.query(
         `SELECT _id, course_name, subject_id, time_start, time_end, day_study,day_start,day_end, fee FROM course
-        WHERE lower(course_name) LIKE $1 ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,page],
+        WHERE curr_state = 0 AND lower(course_name) LIKE $1 ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,page],
         (err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
@@ -65,7 +65,7 @@ router.get('/search/subject',(req,res)=>{
 
     pool.query(
         `SELECT _id, course_name, subject_id, time_start, time_end, day_study,day_start,day_end, fee FROM course
-        WHERE subject_id=$1 ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,page],
+        WHERE curr_state = 0 AND subject_id=$1 ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,page],
         (err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);

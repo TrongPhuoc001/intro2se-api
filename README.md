@@ -230,7 +230,7 @@ OUT PUT
 ]
 ```
 
-### Search availble by course_name  
+### Search available by course_name  
 URL : "http://intro2se-api.herokuapp.com/course/search?q=:searchString&page=... "   
 {q} : empty string by DEFAULT => get all availble course  
 {page} : OPTIONAL, 0 by DEFAULT  
@@ -318,6 +318,12 @@ OUT PUT
     }
 ]
 ```
+### GET information of a course
+URL :   "http://intro2se-api.herokuapp.com/course/:course_id "  
+
+OUT PUT:
+
+
 ### Sign in a course
 
 URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign "  

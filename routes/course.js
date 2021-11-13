@@ -77,8 +77,9 @@ router.get('/search/subject',(req,res)=>{
 
 router.get("/:courseId", (req,res) => {
     pool.query(
-        `SELECT * FROM courses
-        WHERE _id=$1;`,[req.params.courseId],(err,result)=>{
+        `SELECT user_name as teacher_name,course.* FROM course,"user"
+        WHERE course._id=$1
+        AND "user"._id=course.teacher_id;`,[req.params.courseId],(err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
             }

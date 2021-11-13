@@ -24,11 +24,13 @@ router.get("/:userId/courses", verify, (req,res)=>{
     }
     if(req.user.type === 2){
         pool.query(
-            `SELECT course_name, subject_id,time_start,time_end,day_study, curr_state FROM course, student_course
+            `SELECT course_name, user_name as teacher_name,course_id,subject_id,time_start,time_end,day_study
+            FROM course, student_course, "user"
             WHERE student_id=$1 
-            AND course_id = course._id;`,[req.user._id],(err,result)=>{
+            AND course_id = course._id
+            AND "user"._id = course.teacher_id;`,[req.user._id],(err,result)=>{
                 if(err){
-                    return res.status(400).json(err);
+                    return res.status(400).json(err.routine);
                 }
                 return res.status(200).json(result.rows);
             }

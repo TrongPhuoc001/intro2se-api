@@ -9,9 +9,8 @@ const limit = 10;
 
 router.get('/all', (req,res)=>{
     const page = req.query.page||0;
-    console.log(page);
     pool.query(
-        `SELECT _id, course_name, subject_id, time_start, time_end, day_study, day_start,day_end, max_slot, fee, curr_state FROM course ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,parseInt(page)],
+        `SELECT course._id, course_name, teacher_id,user_name as teacher_name,subject_id, time_start, time_end, day_study, day_start, curr_state FROM course,"user" WHERE course.teacher_id = "user"._id ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,parseInt(page)*limit],
         (err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
@@ -23,8 +22,8 @@ router.get('/all', (req,res)=>{
 router.get('/available', (req,res)=>{
     const page = req.query.page||0;
     pool.query(
-        `SELECT _id, course_name, subject_id, time_start, time_end, day_study,day_start,day_end, fee FROM course
-        WHERE curr_state=0 ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,page],(err,result)=>{
+        `SELECT course._id, course_name, subject_id, teacher_id,user_name as teacher_name,time_start, time_end, day_study,day_start  FROM course,"user"
+        WHERE curr_state=0 AND course.teacher_id = "user"._id ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,parseInt(page)*limit],(err,result)=>{
             if(err){
                 return res.status(400).json(err.routine);
             }

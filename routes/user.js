@@ -14,7 +14,7 @@ router.get("/:userId/courses", verify, (req,res)=>{
     if(req.user.type === 1){
         pool.query(
             `SELECT course_name, subject_id,time_start,time_end,day_study FROM course
-            WHERE teacher_id=$1`,[req.user._id],(err,result)=>{
+            WHERE teacher_id=$1 AND curr_state = 1 `,[req.user._id],(err,result)=>{
                 if(err){
                     return res.status(400).json(err.routine);
                 }
@@ -24,7 +24,38 @@ router.get("/:userId/courses", verify, (req,res)=>{
     }
     if(req.user.type === 2){
         pool.query(
-            `SELECT course_name, user_name as teacher_name,course_id,subject_id,time_start,time_end,day_study
+            `SELECT course._id,course_name, user_name as teacher_name,course_id,subject_id,time_start,time_end,day_study
+            FROM course, student_course, "user"
+            WHERE student_id=$1 
+            AND course_id = course._id
+            AND "user"._id = course.teacher_id
+            AND curr_state = 1;`,[req.user._id],(err,result)=>{
+                if(err){
+                    return res.status(400).json(err.routine);
+                }
+                return res.status(200).json(result.rows);
+            }
+        )
+    }
+});
+router.get('/:userId/allCourses',verify,(req,res)=>{
+    if(req.user._id != req.params.userId){
+        return res.status(400).json({"message" : "token not match user"})
+    }
+    if(req.user.type === 1){
+        pool.query(
+            `SELECT course._id, course_name, subject_id,time_start,time_end,day_study,curr_state FROM course
+            WHERE teacher_id=$1  `,[req.user._id],(err,result)=>{
+                if(err){
+                    return res.status(400).json(err.routine);
+                }
+                return res.status(200).json(result.rows);
+            }
+        )
+    }
+    if(req.user.type === 2){
+        pool.query(
+            `SELECT course._id,course_name, user_name as teacher_name,subject_id,time_start,time_end,day_study,curr_state
             FROM course, student_course, "user"
             WHERE student_id=$1 
             AND course_id = course._id
@@ -36,9 +67,7 @@ router.get("/:userId/courses", verify, (req,res)=>{
             }
         )
     }
-   
-    
-});
+})
 
 router.post('/login', async (req,res) => {
     const {error} = loginValid(req.body);

@@ -1,5 +1,5 @@
 Welcome to intro2se-api :)  link github : 'https://github.com/TrongPhuoc001/intro2se-api '
-
+out put có thể khác nên là cứ gọi thử xem dữ liệu thế nào :)))  
 # Routes
 
 ## User routes
@@ -97,7 +97,7 @@ Response.body :
 
 add token in request.header with "auth" key for other user and course api  
 
-### User course
+### User courses - on studying
 
 URL : 'http://intro2se-api.herokuapp.com/user/:user_id/courses '  
 TOKEN require  
@@ -124,24 +124,45 @@ Get success
 RESPONSE
 ```javascript
 [
-<<<<<<< HEAD
     {
         "course_name": "Nhập Môn Lập Trình",
+        "teacher_name": "Nguyễn Trọng Phước",
+        "course_id": 1,
         "subject_id": 1,
         "time_start": "07:30:00",
         "time_end": "11:30:00",
         "day_study": 2
-    },
-    {
-        "course_name": "Cơ sở dữ liệu",
-        "subject_id": 2,
-        "time_start": "07:30:00",
-        "time_end": "11:00:00",
-        "day_study": 3
     }
 ]
 ```
+### User course - all been signed 
+URL : 'http://intro2se-api.herokuapp.com/user/:user_id/allCourses '  
 
+OUT PUT 
+```javascript
+[
+    {
+        "course_name": "Nhập Môn Lập Trình",
+        "teacher_name": "Nguyễn Trọng Phước",
+        "course_id": 1,
+        "subject_id": 1,
+        "time_start": "07:30:00",
+        "time_end": "11:30:00",
+        "day_study": 2,
+        "curr_state": 1
+    },
+    {
+        "course_name": "Cơ sở dữ liệu",
+        "teacher_name": "Nguyễn Trọng Phước",
+        "course_id": 2,
+        "subject_id": 2,
+        "time_start": "07:30:00",
+        "time_end": "11:00:00",
+        "day_study": 3,
+        "curr_state": 0
+    }
+]
+```
 ### Delete user
 
 URL : "http://intro2se-api.herokuapp.com/user/delete "  
@@ -150,6 +171,44 @@ TOKEN require
 
 ## Course route
 
+### GET all subject  
+URL : "http://intro2se-api.herokuapp.com/course/subject "
+
+OUT PUT
+```javascript
+[
+    {
+        "_id": 1,
+        "subject_name": "Lập Trình/Programing",
+        "color": "#C9E4C5"
+    },
+    {
+        "_id": 2,
+        "subject_name": "Dữ Liệu/Data",
+        "color": "#ADC2A9"
+    },
+    {
+        "_id": 3,
+        "subject_name": "Khoa học máy tính/Computer Science",
+        "color": "#C8E3D4"
+    },
+    {
+        "_id": 4,
+        "subject_name": "Mạng Máy tính/Network",
+        "color": "#B5CDA3"
+    },
+    {
+        "_id": 5,
+        "subject_name": "Phần Mềm/Software",
+        "color": "#F6EABE"
+    },
+    {
+        "_id": 6,
+        "subject_name": "Trí tuệ nhân tạo/AI",
+        "color": "#87AAAA"
+    }
+]
+```
 ### All courses
 
 URL : "http://intro2se-api.herokuapp.com/course/all?page=... "  
@@ -322,7 +381,25 @@ OUT PUT
 URL :   "http://intro2se-api.herokuapp.com/course/:course_id "  
 
 OUT PUT:
-
+```javascript
+{
+    "teacher_name": "Nguyễn Trọng Phước",
+    "_id": 1,
+    "subject_id": 1,
+    "course_name": "Nhập Môn Lập Trình",
+    "teacher_id": 1,
+    "time_start": "07:30:00",
+    "time_end": "11:30:00",
+    "day_study": 2,
+    "day_start": "2021-08-23T17:00:00.000Z",
+    "day_end": "2021-08-23T17:00:00.000Z",
+    "room": null,
+    "max_slot": 100,
+    "fee": "$1,000,000.00",
+    "curr_state": 1,
+    "create_time": "2021-11-02T06:37:42.631Z"
+}
+```
 
 ### Sign in a course
 

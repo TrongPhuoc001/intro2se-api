@@ -17,9 +17,12 @@
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "markdown-to-html": "0.0.13",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0",
     "pg": "^8.7.1"
   },
   "devDependencies": {

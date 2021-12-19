@@ -1,148 +1,21 @@
 const express = require("express");
-const pool = require("../dbconnect");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { registerValid, loginValid } = require("../validation");
-const verify = require("../verifyToken");
 const router = express.Router();
 
+const verify = require("../helper/verifyToken");
 
-router.get("/:userId/courses", verify, (req,res)=>{
-    if(req.user._id != req.params.userId){
-        return res.status(400).json({"message" : "token not match user"})
-    }
-    if(req.user.type === 1){
-        pool.query(
-            `SELECT course_name, subject_id,time_start,time_end,day_study FROM course
-            WHERE teacher_id=$1 AND curr_state = 1 `,[req.user._id],(err,result)=>{
-                if(err){
-                    return res.status(400).json(err.routine);
-                }
-                return res.status(200).json(result.rows);
-            }
-        )
-    }
-    if(req.user.type === 2){
-        pool.query(
-            `SELECT course._id,course_name, user_name as teacher_name,course_id,subject_id,time_start,time_end,day_study
-            FROM course, student_course, "user"
-            WHERE student_id=$1 
-            AND course_id = course._id
-            AND "user"._id = course.teacher_id
-            AND curr_state = 1;`,[req.user._id],(err,result)=>{
-                if(err){
-                    return res.status(400).json(err.routine);
-                }
-                return res.status(200).json(result.rows);
-            }
-        )
-    }
-});
-router.get('/:userId/allCourses',verify,(req,res)=>{
-    if(req.user._id != req.params.userId){
-        return res.status(400).json({"message" : "token not match user"})
-    }
-    if(req.user.type === 1){
-        pool.query(
-            `SELECT course._id, course_name, subject_id,time_start,time_end,day_study,curr_state FROM course
-            WHERE teacher_id=$1  `,[req.user._id],(err,result)=>{
-                if(err){
-                    return res.status(400).json(err.routine);
-                }
-                return res.status(200).json(result.rows);
-            }
-        )
-    }
-    if(req.user.type === 2){
-        pool.query(
-            `SELECT course._id,course_name, user_name as teacher_name,subject_id,time_start,time_end,day_study,curr_state
-            FROM course, student_course, "user"
-            WHERE student_id=$1 
-            AND course_id = course._id
-            AND "user"._id = course.teacher_id;`,[req.user._id],(err,result)=>{
-                if(err){
-                    return res.status(400).json(err.routine);
-                }
-                return res.status(200).json(result.rows);
-            }
-        )
-    }
-})
+const controller = require('../controllers/user');
 
-router.post('/login', async (req,res) => {
-    const {error} = loginValid(req.body);
-    if(error){
-        return res.status(400).json({"message" :error.details[0].message})
-    }
-    const {email, password} = req.body;
-    pool.query(
-        `SELECT * FROM "user"
-        WHERE email = $1;`,[email],async (err,result)=>{
-            if(err){
-                return res.status(400).json(err.routine);
-            }
-            if(result.rows.length === 0 ){
-                return res.status(400).json({"message":"Email or password is invalid"});
-            }
-            user = result.rows[0];
-            const validPassword = await bcrypt.compare(password,user.password);
-            if(!validPassword){
-                return res.status(400).json({"message":"Email or password is invalid"});
-            }
+router.post('/login', controller.postLogin);
+router.post('/register', controller.postRegister);
 
-            const token = jwt.sign({_id : user._id,type: user.type}, process.env.TOKEN_SECRET);
-            return res.header('auth', token).status(200).json({"message": "Login successful!",user});
-        }
-    )
-});
+router.use(verify);
 
-router.post('/register', async (req,res) => {
-    const {error} = registerValid(req.body);
-    if(error){ 
-        return res.status(400).json({"message" :error.details[0].message})
-    }
-    const {name , email, password, type, gender, birthday} = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    
-    pool.query(
-        `SELECT * FROM "user"
-        WHERE email = $1;`, [email], (err,result)=>{
-            if(err){
-                return res.status(400).json(err);
-            }
-            if(result.rows.length > 0 ){
-                return res.status(400).json({"message": "email has already been taken"});
-            }
-            else {
-                pool.query(
-                    `INSERT INTO "user"(user_name,email,password,type, gender, birthday)
-                    VALUES ($1,$2,$3,$4,$5,$6);`, [name,email,hashedPassword,parseInt(type),gender,birthday], (err,result)=>{
-                        if(err){
-                            return res.json(err);
-                        }
-                        return res.status(200).json({"message": "Account create successful"});
-                    }
-                )
-            }
-        }
-    )
-});
+router.get("/:userId/courses", controller.getCourse);
+router.get('/:userId/allCourses',controller.getAllCourse);
 
-router.delete("/:user_id/delete", verify,(req,res)=>{
-    if(req.user._id != req.params.user_id){
-        return res.status(400).json({"message":"Token not match user"});
-    }
-    pool.query(
-        `DELETE FROM "user"
-        WHERE _id=$1`,[req.user._id],(err,result)=>{
-            if(err){
-                return res.status(400).json(err);
-            }
-            return res.status(200).json({"message":"Delete success."});
-        }
-    )
-});
+router.delete("/:user_id/delete",controller.deleteUser);
 
+router.put('/:user_id/update',controller.updateUser)
 
 
 module.exports = router;

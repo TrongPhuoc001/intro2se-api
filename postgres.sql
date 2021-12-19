@@ -6,6 +6,10 @@ declare
   i integer := 0;
 begin
     result := chars[1+random()*(array_length(chars, 1)-1)];
+	while(SELECT COUNT(*) FROM subject WHERE color=result)
+		loop
+			result := chars[1+random()*(array_length(chars, 1)-1)];
+		end loop;
   return result;
 end;
 $$ language plpgsql;
@@ -24,7 +28,8 @@ create table public."user"(
 create table "admin"(
 	_id serial PRIMARY KEY,
 	admin_name VARCHAR(255) NOT NULL UNIQUE,
-	password VARCHAR(255) NOT NULL
+	password VARCHAR(255) NOT NULL,
+	type VARCHAR(10) NOT NULL
 );
 
 create table type_user(
@@ -49,6 +54,7 @@ create table course(
 	_id serial PRIMARY KEY,
 	subject_id int NOT NULL,
 	course_name VARCHAR(255) NOT NULL,
+	description VARCHAR(255),
 	teacher_id int NOT NULL,
 	time_start time NOT NULL,
 	time_end time NOT NULL,
@@ -78,51 +84,100 @@ create table course_task(
 
 ALTER TABLE public."user" ADD CONSTRAINT FK_User_TypeUser FOREIGN KEY (type) REFERENCES type_user(_id);
 
-ALTER TABLE discuss ADD CONSTRAINT FK_Discuss_User FOREIGN KEY (user_id) REFERENCES public."user"(_id);
-ALTER TABLE discuss ADD CONSTRAINT FK_Discuss_Course FOREIGN KEY (course_id) REFERENCES course(_id);
+ALTER TABLE discuss 
+	ADD CONSTRAINT FK_Discuss_User 
+		FOREIGN KEY (user_id) 
+			REFERENCES public."user"(_id)
+			ON DELETE CASCADE;
+ALTER TABLE discuss ADD 
+	CONSTRAINT FK_Discuss_Course 
+		FOREIGN KEY (course_id) 
+			REFERENCES course(_id)
+			ON DELETE CASCADE;
 
-ALTER TABLE course ADD CONSTRAINT FK_Course_Teacher FOREIGN KEY (teacher_id) REFERENCES public."user"(_id);
-ALTER TABLE course ADD CONSTRAINT FK_Course_Subject FOREIGN KEY (subject_id) REFERENCES subject(_id);
+ALTER TABLE course ADD 
+	CONSTRAINT FK_Course_Teacher 
+		FOREIGN KEY (teacher_id) 
+			REFERENCES public."user"(_id)
+			ON DELETE CASCADE;
+ALTER TABLE course ADD 
+	CONSTRAINT FK_Course_Subject 
+		FOREIGN KEY (subject_id) 
+			REFERENCES subject(_id);
 
-ALTER TABLE course_task ADD CONSTRAINT FK_CourseTask_Course FOREIGN KEY (course_id) REFERENCES course(_id);
+ALTER TABLE course_task ADD 
+	CONSTRAINT FK_CourseTask_Course 
+		FOREIGN KEY (course_id) 
+			REFERENCES course(_id)
+			ON DELETE CASCADE;
 
-ALTER TABLE student_course ADD CONSTRAINT FK_StudentCourse_Student FOREIGN KEY (student_id) REFERENCES public."user"(_id);
+ALTER TABLE student_course ADD 
+	CONSTRAINT FK_StudentCourse_Student 
+		FOREIGN KEY (student_id) 
+			REFERENCES public."user"(_id)
+			ON DELETE CASCADE;
 
 insert into type_user(type_name) values
 ('teacher'),
 ('student');
 
-insert into "admin" (admin_name,password) 
-values ('admin','spectre');
+insert into "admin" (admin_name,password,type) 
+values ('admin','spectre','admin'),
+('phuoc','123123','maneger'),
+('quan','123123','maneger');
 
 
 insert into "user" (user_name,password,type,email,gender,birthday,address) 
 values 
-('Giáo Viên 1','giaovien1',1,'giaovien1@gmail.com','Nam','2001-24-04','Đắc Lắc'),
-('Giáo Viên 2','giaovien2',1,'giaovien2@gmail.com','Nam','2001-24-04','Đắc Lắc'),
-('Giáo Viên 3','giaovien2',1,'giaovien3@gmail.com','Nam','2001-24-04','Đắc Lắc'),
-('Học Sinh 1','hocsinh1',2,'hocsinh1@gmail.com','Nam','2001-24-04','Đắc Lắc'),
-('Học Sinh 2','hocsinh2',2,'hocsinh2@gmail.com','Nam','2001-24-04','Đắc Lắc'),
-('Học Sinh 3','hocsinh3',2,'hocsinh3@gmail.com','Nam','2001-24-04','Đắc Lắc');
+('Giáo Viên 1','123123',1,'giaovien1@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 2','123123',1,'giaovien2@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 3','123123',1,'giaovien3@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 4','123123',1,'giaovien4@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 5','123123',1,'giaovien5@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 1','123123',2,'hocsinh1@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 2','123123',2,'hocsinh2@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 3','123123',2,'hocsinh3@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 4','123123',2,'hocsinh4@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 5','123123',2,'hocsinh5@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 6','123123',2,'hocsinh6@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 7','123123',2,'hocsinh7@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 8','123123',2,'hocsinh8@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 9','123123',2,'hocsinh9@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 10','123123',2,'hocsinh10@gmail.com','Nam','2001-04-24','Đắc Lắc');
 
 insert into subject(subject_name) values
 ('Lập Trình/Programing'),
-('Dữ Liệu/Data'),
+('Hệ thống thông tin/Data System'),
 ('Khoa học máy tính/Computer Science'),
 ('Mạng Máy tính/Network'),
 ('Phần Mềm/Software'),
-('Trí tuệ nhân tạo/AI');
+('Trí tuệ nhân tạo/AI'),
+('An Toàn Thông Tin/Security'),
+('Khoa học dữ liệu/Data Science'),
+('Thiết kế đồ họa/Graphic Design'),
+('Hệ thống máy tính/Computer System');
 
-insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee) values
-(6,'Cơ sở trí tuệ nhân tạo',1,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(1,'Kĩ Thuật Lập Trình',1,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(1,'Lập Trình Hướng Đối Tượng',1,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(2,'Cấu Trúc Dữ Liệu Và Giải Thuật',1,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(4,'Mạng Máy Tính',1,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(3,'Hệ Thống Máy Tính',1,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(2,'Cơ Sở Dữ Liệu',1,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(3,'Hệ Điều Hành',1,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000),
-(5,'Nhập Môn Công Nghệ Phần Mềm',1,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000);
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(1,'Kĩ Thuật Lập Trình',1,'12:30:00','16:30:00',4,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
+(1,'Lập Trình Hướng Đối Tượng',1,'07:30:00','10:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,' Môn cơ sở ngành'),
+(2,'Cơ Sở Dữ Liệu',2,'07:30:00','10:30:00',4,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
+(2,'Hệ quản trị cơ sở dữ liệu',2,'12:30:00','16:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(3,'Cấu Trúc Dữ Liệu Và Giải Thuật',3,'12:30:00','16:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
+(3,'Độ phức tạp thuật toán',3,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(4,'Mạng Máy Tính',4,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
+(4,'Hệ thống viễn thông',4,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(5,'Nhập Môn Công Nghệ Phần Mềm',1,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(5,'Kiến Trúc Phần Mềm',1,'12:30:00','16:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(6,'Cơ sở trí tuệ nhân tạo',5,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
+(6,'Nhập môn học máy',5,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(7,'Mã hóa ứng dụng',4,'12:30:00','16:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(7,'Nhập môn mã hóa - mật mã',4,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(8,'Nhập môn khoa học dữ liệu',2,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(8,'Khai thác dữ liệu',2,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(9,'Xử lý ảnh số và video số',5,'12:30:00','16:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(9,'Thiết kế đồ họa',5,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
+(10,'Hệ Thống Máy Tính',3,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
+(10,'Hệ Điều Hành',3,'12:30:00','16:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
 
 insert into course_task(course_id,content,task_endtime) values
 (1,'Làm bài tập 1 trong slide','2021-12-12 00:00:00'),
@@ -134,26 +189,31 @@ insert into course_task(course_id,content,task_endtime) values
 (7,'Làm bài tập 7 trong slide','2021-12-12 00:00:00');
 
 insert into discuss(user_id,course_id,content)values
-(5,1,'Mong thầy gửi video record'),
-(5,4,'Mong thầy gửi video record'),
-(5,7,'Mong thầy gửi video record'),
-(5,8,'Mong thầy gửi video record'),
+(6,1,'Mong thầy gửi video record'),
+(6,4,'Mong thầy gửi video record'),
+(6,7,'Mong thầy gửi video record'),
+(6,8,'Mong thầy gửi video record'),
 (2,1,'Trên kênh youtube của thầy nha :D'),
 (2,4,'Trên kênh youtube của thầy nha :D'),
 (2,7,'Trên kênh youtube của thầy nha :D'),
 (2,8,'Trên kênh youtube của thầy nha :D');
 
-insert into student_course(student_id,course_id,resign_time) values
-(5,1,'2021-10-10 00:00:00'),
-(5,4,'2021-10-10 00:00:00'),
-(5,7,'2021-10-10 00:00:00'),
-(5,8,'2021-10-10 00:00:00'),
-(6,2,'2021-10-10 00:00:00'),
-(6,5,'2021-10-10 00:00:00'),
-(6,8,'2021-10-10 00:00:00'),
-(6,10,'2021-10-10 00:00:00'),
-(7,3,'2021-10-10 00:00:00'),
-(7,6,'2021-10-10 00:00:00'),
-(7,9,'2021-10-10 00:00:00'),
-(7,10,'2021-10-10 00:00:00');
-
+insert into student_course(student_id,course_id) values
+(6,4),
+(6,2),
+(6,1),
+(6,15),
+(6,11),
+(7,4),
+(7,2),
+(7,1),
+(7,15),
+(7,11),
+(8,5),(8,20),(8,1),(8,13),(8,12),
+(9,5),(9,20),(9,1),(9,13),(9,12),
+(10,8),(10,2),(10,1),(10,10),(10,14),
+(11,8),(11,2),(11,1),(11,10),(11,14),
+(12,9),(12,17),(12,3),(12,7),(12,16),
+(13,9),(13,17),(13,3),(13,7),(13,16),
+(14,18),(14,17),(14,3),(14,6),(14,19),
+(15,18),(15,17),(15,3),(15,6),(15,19);

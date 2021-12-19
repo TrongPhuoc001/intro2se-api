@@ -339,44 +339,7 @@ OUT PUT
 ]
 ```
 
-### Search by subject 
-URL : "http://intro2se-api.herokuapp.com/course/search/subject?q=:subjectId&page=... "  
-{q} subject id REQUIRE    
-{page} OPTIONAL, 0 by DEFAULT  
 
-Example  
-REQUEST  
-```javascript
-fetch("http://intro2se-api.herokuapp.com/course/search/subject?q=3 ");
-```
-
-OUT PUT  
-```javascript
-[
-    {
-        "_id": 8,
-        "course_name": "Hệ Thống Máy Tính",
-        "subject_id": 3,
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 6,
-        "day_start": "2021-08-23T17:00:00.000Z",
-        "day_end": "2021-12-23T17:00:00.000Z",
-        "fee": "$3,000,000.00"
-    },
-    {
-        "_id": 9,
-        "course_name": "Hệ Điều Hành",
-        "subject_id": 3,
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 6,
-        "day_start": "2021-08-23T17:00:00.000Z",
-        "day_end": "2021-12-23T17:00:00.000Z",
-        "fee": "$3,000,000.00"
-    }
-]
-```
 ### GET information of a course
 URL :   "http://intro2se-api.herokuapp.com/course/:course_id "  
 
@@ -440,6 +403,19 @@ status 200 is success
 this api will sign this user to the course
 URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign?courseId=:course_id "  
 
+
+```javascript
+fetch("http://intro2se-api.herokuapp.com/course/6/sign", {
+  header: {
+    "Content-Type": "application/json",
+    auth: "bla..blaa..",
+  },
+  method: POST,
+  body: {
+    "course_id": 3 
+},
+});
+```
 ### Unsign
 
 URL : "http://intro2se-api.herokuapp.com/course/:user_id/unsign/:course_id "  

@@ -170,6 +170,5 @@ exports.postTable =async (req,res)=>{
 
 exports.postLogin = passport.authenticate('local', { 
     successRedirect: '/admin/dashboard',
-    failureRedirect: '/admin/login?error=true',
-    failureMessage:'Wrong email or password'
+    failureRedirect: '/admin/login?error=true'
 });

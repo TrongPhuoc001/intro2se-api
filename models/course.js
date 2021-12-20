@@ -5,7 +5,7 @@ const limit = 10;
 exports.teacherCourse = (user_id)=>{
     return pool.query(
         `SELECT course_name, subject_id,time_start,time_end,day_study FROM course
-        WHERE teacher_id=$1 AND curr_state = 1 `,[user_id]
+        WHERE teacher_id=$1 AND curr_state = 1 ;`,[user_id]
     )
 }
 

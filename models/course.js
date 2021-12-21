@@ -4,36 +4,41 @@ const limit = 10;
 
 exports.teacherCourse = (user_id)=>{
     return pool.query(
-        `SELECT course_name, subject_id,time_start,time_end,day_study FROM course
-        WHERE teacher_id=$1 AND curr_state = 1 ;`,[user_id]
+        `SELECT course_name, subject.subject_name as subject_name, subject.color as color,time_start,time_end,day_study FROM course,subject
+        WHERE teacher_id=$1
+        AND course.subject_id = subject._id 
+        AND curr_state = 1 ;`,[user_id]
     )
 }
 
 exports.studentCourse = (user_id)=>{
     return pool.query(
-        `SELECT course._id,course_name, user_name as teacher_name,course_id,subject_id,time_start,time_end,day_study
-        FROM course, student_course, "user"
-        WHERE student_id=$1 
+        `SELECT course._id,course_name, user_name as teacher_name,course_id,subject.subject_name as subject_name, subject.color as color,time_start,time_end,day_study
+        FROM course, student_course, "user",subject
+        WHERE student_id=$1
         AND course_id = course._id
         AND "user"._id = course.teacher_id
+        AND course.subject_id = subject._id
         AND curr_state = 1;`,[user_id]
     )
 }
 
 exports.teacherAllCourse = (user_id)=>{
     return pool.query(
-        `SELECT course._id, course_name, subject_id,time_start,time_end,day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,TO_CHAR(day_end, 'yyyy-MM-DD') as day_end,curr_state FROM course
-        WHERE teacher_id=$1  `,[user_id]
+        `SELECT course._id, course_name, subject.subject_name as subject_name, subject.color as color,time_start,time_end,day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,TO_CHAR(day_end, 'yyyy-MM-DD') as day_end,curr_state FROM course,subject
+        WHERE teacher_id=$1  
+        AND course.subject_id=subject._id;`,[user_id]
     )
 }
 
 exports.studentAllCourse = (user_id)=>{
     return pool.query(
-        `SELECT course._id,course_name, user_name as teacher_name,subject_id,time_start,time_end,day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,TO_CHAR(day_end, 'yyyy-MM-DD') as day_end,curr_state
-        FROM course, student_course, "user"
+        `SELECT course._id,course_name, user_name as teacher_name,subject.subject_name as subject_name, subject.color as color,time_start,time_end,day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,TO_CHAR(day_end, 'yyyy-MM-DD') as day_end,curr_state
+        FROM course, student_course, "user",subject
         WHERE student_id=$1 
         AND course_id = course._id
-        AND "user"._id = course.teacher_id;`,[user_id]
+        AND "user"._id = course.teacher_id
+        AND course.subject_id=subject._id;`,[user_id]
     )
 }
 

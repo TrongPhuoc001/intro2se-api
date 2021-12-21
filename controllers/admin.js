@@ -3,7 +3,11 @@ const bcrypt = require("bcryptjs");
 const pool = require("../config/dbconnect");
 const {registerValid, courseValid} = require('../helper/validation');
 const passport = require('../config/passport');
-
+const courseModel = require('../models/course');
+const userModel = require('../models/user');
+const adminModel = require('../models/admin');
+const stu_cour = require('../models/stu_course');
+const subjectModel = require('../models/subject')
 exports.index = async(req, res) => {
     res.redirect('./admin/login');
 }
@@ -13,46 +17,55 @@ exports.getLogin = async(req, res) => {
 }
 
 exports.getDashboard = async(req,res)=>{
-    console.log('dashboard');
-    pool.query(
-        `select
-            t.table_name,
-            array_agg(c.column_name::text) as columns
-        from
-            information_schema.tables t
-        inner join information_schema.columns c on
-            t.table_name = c.table_name
-        where
-            t.table_schema = 'public'
-            and t.table_type= 'BASE TABLE'
-            and c.table_schema = 'public'
-            and is_nullable = 'NO'
-        group by t.table_name;`,(err,result)=>{
-            if(err){
-                console.log(err);
-                return res.json(err);
-            }
-            result.rows.forEach(table=>{
-                const index = table.columns.indexOf('_id');
-                if (index > -1) {
-                    table.columns.splice(index, 1);
-                }
-            })
-            return res.render('index',{data:JSON.stringify(result.rows)});
-        }
-    )
+    const table = [
+        {
+            table_name:'admin',
+            columns:['admin_name','password','type']
+        },
+        {
+            table_name:'course',
+            columns:['course_name','subject_id','teacher_id','day_end','day_start','day_study','time_end','time_start','fee,max_slot']
+        },
+        {
+            table_name:'student_course',
+            columns:['course_id','student_id']
+        },
+        {
+            table_name:'user',
+            columns:['email','user_name','password','gender','birthday','type']
+        },
+        {
+            table_name:'subject',
+            columns:['subject_name']
+        },
+    ]
+    
+    return res.render('index',{data:JSON.stringify(table)});
 }
 
 exports.getTable = async(req,res)=>{
-    pool.query(
-        `SELECT * FROM "${req.params.table_name}" ORDER BY _id DESC;`,(err,results)=>{
-            if(err){
-                console.log(err);
-                return res.status(400).json(err.routine);
-            }
-            return res.status(200).json(results.rows);
-        }
-    )
+    switch(req.params.table_name){
+        case 'admin':
+            const admin_result = await adminModel.findAll;
+            res.status(200).json(admin_result.rows);
+            break;
+        case 'course':
+            const course_result = await courseModel.getAll(0);
+            res.status(200).json(course_result.rows);
+            break;
+        case 'student_course':
+            const stu_cour_result = await stu_cour.getAll(0);
+            res.status(200).json(stu_cour_result.rows);
+            break;
+        case 'user':
+            const user_result = await userModel.findAll(0);
+            res.status(200).json(user_result.rows);
+            break;
+        case 'subject':
+            const sub_result = await subjectModel.getAllSubject;
+            res.status(200).json(sub_result.rows);
+            break;
+    }
 }
 
 exports.delRecord = async(req,res)=>{
@@ -172,3 +185,8 @@ exports.postLogin = passport.authenticate('local', {
     successRedirect: '/admin/dashboard',
     failureRedirect: '/admin/login?error=true'
 });
+
+exports.logout = (req,res)=>{
+    req.logout();
+    res.redirect('/admin/login');
+}

@@ -7,6 +7,14 @@ exports.findOne = (email)=>{
     )
 }
 
+exports.findAll = (page)=>{
+    return pool.query(
+        `SELECT * FROM "user"
+        ORDER BY _id 
+        LIMIT $1 OFFSET $2`,[10,page*10]
+    )
+}
+
 exports.addUser = (name,email,hashedPassword,type,gender,birthday)=>{
     return pool.query(
         `INSERT INTO "user"(user_name,email,password,type, gender, birthday)

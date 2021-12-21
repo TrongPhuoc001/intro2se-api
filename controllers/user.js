@@ -12,7 +12,7 @@ exports.getCourse = async(req,res)=>{
     }
     if(req.user.type === 1){
         try{
-            const result = await courseModel.teacherCourse(req.user.id);
+            const result = await courseModel.teacherCourse(req.user._id);
             return res.status(200).json(result.rows);
         }
         catch(err){
@@ -21,7 +21,7 @@ exports.getCourse = async(req,res)=>{
     }
     if(req.user.type === 2){
         try{
-            const result = await courseModel.studentCourse(req.user.id);
+            const result = await courseModel.studentCourse(req.user._id);
             return res.status(200).json(result.rows);
         }
         catch(err){

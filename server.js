@@ -25,7 +25,7 @@ app.get('/' , (req , res)=>{
    const md = new Markdown();
    md.bufmax = 2048;
    const fileName = __dirname + '/README.md';
-   const opts = {title: 'Read Me', stylesheet: 'styles/readme.css'};
+   const opts = {title: 'Read Me', stylesheet: 'styles/readme.css', charset: 'utf-8'};
    // Write a header.
    md.render(fileName, opts, function(err) {
       if (err) {

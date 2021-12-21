@@ -14,6 +14,7 @@ router.delete('/dashboard/:table_name/:record_id', controller.delRecord)
 router.post('/dashboard/:table_name', controller.postTable)
 
 router.post('/login', controller.postLogin)
+router.get('/logout',controller.logout);
 
 
 module.exports = router;

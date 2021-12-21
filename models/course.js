@@ -22,14 +22,14 @@ exports.studentCourse = (user_id)=>{
 
 exports.teacherAllCourse = (user_id)=>{
     return pool.query(
-        `SELECT course._id, course_name, subject_id,time_start,time_end,day_study,curr_state FROM course
+        `SELECT course._id, course_name, subject_id,time_start,time_end,day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,TO_CHAR(day_end, 'yyyy-MM-DD') as day_end,curr_state FROM course
         WHERE teacher_id=$1  `,[user_id]
     )
 }
 
 exports.studentAllCourse = (user_id)=>{
     return pool.query(
-        `SELECT course._id,course_name, user_name as teacher_name,subject_id,time_start,time_end,day_study,curr_state
+        `SELECT course._id,course_name, user_name as teacher_name,subject_id,time_start,time_end,day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,TO_CHAR(day_end, 'yyyy-MM-DD') as day_end,curr_state
         FROM course, student_course, "user"
         WHERE student_id=$1 
         AND course_id = course._id
@@ -39,20 +39,20 @@ exports.studentAllCourse = (user_id)=>{
 
 exports.getAll = (page)=>{
     return pool.query(
-        `SELECT course._id, course_name, teacher_id,user_name as teacher_name,subject_id, time_start, time_end, day_study, day_start, curr_state FROM course,"user" WHERE course.teacher_id = "user"._id ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,parseInt(page)*limit]
+        `SELECT course._id, course_name, teacher_id,user_name as teacher_name,subject_id, time_start, time_end, day_study, TO_CHAR(day_start, 'yyyy-MM-DD') as day_start, curr_state FROM course,"user" WHERE course.teacher_id = "user"._id ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,parseInt(page)*limit]
     )
 }
 
 exports.getAvailable = (page)=>{
     return pool.query(
-        `SELECT course._id, course_name, subject_id, teacher_id,user_name as teacher_name,time_start, time_end, day_study,day_start  FROM course,"user"
+        `SELECT course._id, course_name, subject_id, teacher_id,user_name as teacher_name,time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start  FROM course,"user"
         WHERE curr_state=0 AND course.teacher_id = "user"._id ORDER BY create_time DESC LIMIT $1 OFFSET $2;`,[limit,parseInt(page)*limit]
     )
 }
 
 exports.searchCourse = (q,page)=>{
     return pool.query(
-        `SELECT _id, course_name, subject_id, time_start, time_end, day_study,day_start,day_end, fee FROM course
+        `SELECT _id, course_name, subject_id, time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,day_end, fee FROM course
         WHERE curr_state = 0 AND lower(course_name) LIKE $1 ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,parseInt(page)*limit]
     )
 }

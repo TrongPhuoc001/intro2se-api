@@ -53,7 +53,7 @@ exports.getAll = (page)=>{
 
 exports.getAvailable = (page)=>{
     return pool.query(
-        `SELECT course._id, course_name, subject.subject_name as subject_name, subject.color as color, teacher_id,user_name as teacher_name,time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start  FROM course,"user"
+        `SELECT course._id, course_name, subject.subject_name as subject_name, subject.color as color, teacher_id,user_name as teacher_name,time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start  FROM course,"user", subject
         WHERE curr_state=0 
         AND course.teacher_id = "user"._id 
         AND course.subject_id = subject._id

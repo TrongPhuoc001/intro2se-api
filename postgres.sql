@@ -122,71 +122,96 @@ insert into type_user(type_name) values
 ('student');
 
 insert into "admin" (admin_name,password,type) 
-values ('admin','spectre','admin'),
-('phuoc','123123','maneger'),
-('quan','123123','maneger');
+values ('admin','$2a$10$bS5gC94aIO4eTeb34NXw3OWMjgNZys7QRJJQxqP00g1mLvKof8IWa','admin'),
+('phuoc','$2a$10$RuJ.J7QvP095a1BQgpVmSeF5JTobfsDMdyyzPaFvP5gzYxwNb5R.e','maneger'),
+('quan','$2a$10$RuJ.J7QvP095a1BQgpVmSeF5JTobfsDMdyyzPaFvP5gzYxwNb5R.e','maneger');
 
 
 insert into "user" (user_name,password,type,email,gender,birthday,address) 
 values 
-('Giáo Viên 1','123123',1,'giaovien1@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Giáo Viên 2','123123',1,'giaovien2@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Giáo Viên 3','123123',1,'giaovien3@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Giáo Viên 4','123123',1,'giaovien4@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Giáo Viên 5','123123',1,'giaovien5@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 1','123123',2,'hocsinh1@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 2','123123',2,'hocsinh2@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 3','123123',2,'hocsinh3@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 4','123123',2,'hocsinh4@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 5','123123',2,'hocsinh5@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 6','123123',2,'hocsinh6@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 7','123123',2,'hocsinh7@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 8','123123',2,'hocsinh8@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 9','123123',2,'hocsinh9@gmail.com','Nam','2001-04-24','Đắc Lắc'),
-('Học Sinh 10','123123',2,'hocsinh10@gmail.com','Nam','2001-04-24','Đắc Lắc');
+('Giáo Viên 1','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',1,'giaovien1@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 2','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',1,'giaovien2@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 3','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',1,'giaovien3@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 4','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',1,'giaovien4@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Giáo Viên 5','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',1,'giaovien5@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 1','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh1@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 2','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh2@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 3','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh3@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 4','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh4@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 5','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh5@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 6','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh6@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 7','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh7@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 8','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh8@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 9','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh9@gmail.com','Nam','2001-04-24','Đắc Lắc'),
+('Học Sinh 10','$2a$10$sHlHBUs1Eh5e2vrlYfEsgOoW6KM/ZyzHgNRSCq2c7FI2OcUGkv6s6',2,'hocsinh10@gmail.com','Nam','2001-04-24','Đắc Lắc');
 
 insert into subject(subject_name) values
-('Lập Trình/Programing'),
-('Hệ thống thông tin/Data System'),
-('Khoa học máy tính/Computer Science'),
-('Mạng Máy tính/Network'),
-('Phần Mềm/Software'),
-('Trí tuệ nhân tạo/AI'),
-('An Toàn Thông Tin/Security'),
-('Khoa học dữ liệu/Data Science'),
-('Thiết kế đồ họa/Graphic Design'),
-('Hệ thống máy tính/Computer System');
+('Lập TrÌnh'),
+('Hệ thống thông tin'),
+('Khoa học máy tính'),
+('Mạng Máy tính'),
+('Phần Mềm'),
+('Trí tuệ nhân tạo'),
+('An Toàn Thông Tin'),
+('Khoa học dữ liệu'),
+('Thiết kế đồ họa'),
+('Hệ thống máy tính');
 
 insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
-(1,'Kĩ Thuật Lập Trình',1,'12:30:00','16:30:00',4,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
-(1,'Lập Trình Hướng Đối Tượng',1,'07:30:00','10:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,' Môn cơ sở ngành'),
-(2,'Cơ Sở Dữ Liệu',2,'07:30:00','10:30:00',4,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
-(2,'Hệ quản trị cơ sở dữ liệu',2,'12:30:00','16:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(3,'Cấu Trúc Dữ Liệu Và Giải Thuật',3,'12:30:00','16:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
-(3,'Độ phức tạp thuật toán',3,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(4,'Mạng Máy Tính',4,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
-(4,'Hệ thống viễn thông',4,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(5,'Nhập Môn Công Nghệ Phần Mềm',1,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(5,'Kiến Trúc Phần Mềm',1,'12:30:00','16:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(6,'Cơ sở trí tuệ nhân tạo',5,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
-(6,'Nhập môn học máy',5,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(7,'Mã hóa ứng dụng',4,'12:30:00','16:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(7,'Nhập môn mã hóa - mật mã',4,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(8,'Nhập môn khoa học dữ liệu',2,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(8,'Khai thác dữ liệu',2,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(9,'Xử lý ảnh số và video số',5,'12:30:00','16:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(9,'Thiết kế đồ họa',5,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành'),
-(10,'Hệ Thống Máy Tính',3,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành'),
+(1,'Kĩ Thuật Lập TrÌnh',1,'12:30:00','16:30:00',4,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(1,'Lập TrÌnh Hướng Đối Tượng',1,'07:30:00','10:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,' Môn cơ sở ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(2,'Cơ Sở Dữ Liệu',2,'07:30:00','10:30:00',4,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(2,'Hệ quản trị cơ sở dữ liệu',2,'12:30:00','16:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(3,'Cấu Trúc Dữ Liệu Và Giải Thuật',3,'12:30:00','16:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(3,'Độ phức tạp thuật toán',3,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(4,'Mạng Máy Tính',4,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(4,'Hệ thống viễn thông',4,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(5,'Nhập Môn Công Nghệ Phần Mềm',1,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(5,'Kiến Trúc Phần Mềm',1,'12:30:00','16:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(6,'Cơ sở trí tuệ nhân tạo',5,'07:30:00','10:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(6,'Nhập môn học máy',5,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(7,'Mã hóa ứng dụng',4,'12:30:00','16:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(7,'Nhập môn mã hóa - mật mã',4,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(8,'Nhập môn khoa học dữ liệu',2,'07:30:00','10:30:00',5,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(8,'Khai thác dữ liệu',2,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(9,'Xử lý ảnh số và video số',5,'12:30:00','16:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(9,'Thiết kế đồ họa',5,'07:30:00','10:30:00',2,'2021-8-24','2021-12-24','F102',150,3000000,'Môn chuyên ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
+(10,'Hệ Thống Máy Tính',3,'12:30:00','16:30:00',6,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
+insert into course(subject_id,course_name,teacher_id,time_start,time_end,day_study,day_start,day_end,room,max_slot,fee,description) values
 (10,'Hệ Điều Hành',3,'12:30:00','16:30:00',3,'2021-8-24','2021-12-24','F102',150,3000000,'Môn cơ sở ngành');
 
 insert into course_task(course_id,content,task_endtime) values
-(1,'Làm bài tập 1 trong slide','2021-12-12 00:00:00'),
-(2,'Làm bài tập 2 trong slide','2021-12-12 00:00:00'),
-(3,'Làm bài tập 3 trong slide','2021-12-12 00:00:00'),
-(4,'Làm bài tập 4 trong slide','2021-12-12 00:00:00'),
-(5,'Làm bài tập 5 trong slide','2021-12-12 00:00:00'),
-(6,'Làm bài tập 6 trong slide','2021-12-12 00:00:00'),
-(7,'Làm bài tập 7 trong slide','2021-12-12 00:00:00');
+(1,'Làm bài tập 1 trong slide','2021-12-12 00:00:00');
+insert into course_task(course_id,content,task_endtime) values
+(1,'Làm bài tập 2 trong slide','2021-12-12 00:00:00');
+insert into course_task(course_id,content,task_endtime) values
+(1,'Làm bài tập 3 trong slide','2021-12-12 00:00:00');
+insert into course_task(course_id,content,task_endtime) values
+(1,'Làm bài tập 4 trong slide','2021-12-12 00:00:00');
+insert into course_task(course_id,content,task_endtime) values
+(1,'Làm bài tập 5 trong slide','2021-12-12 00:00:00');
+insert into course_task(course_id,content,task_endtime) values
+(1,'Làm bài tập 6 trong slide','2021-12-12 00:00:00');
+insert into course_task(course_id,content,task_endtime) values
+(1,'Làm bài tập 7 trong slide','2021-12-12 00:00:00');
 
 insert into discuss(user_id,course_id,content)values
 (6,1,'Mong thầy gửi video record'),

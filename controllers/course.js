@@ -39,12 +39,13 @@ exports.getCourseSubject = async(req,res)=>{
 
 exports.searchCourse = async(req,res)=>{
     const q ='%'+ (req.query.q||'').toLowerCase() + '%';
-    const page = req.querypage||0; 
+    const page = req.query.page||0; 
     try{
         const result = await courseModel.searchCourse(q,page);
         return res.json(result.rows);
 
     }catch(err){
+        console.log(err);
         return res.status(400).json(err.routine);
     }
 }

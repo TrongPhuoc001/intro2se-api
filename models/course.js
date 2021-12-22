@@ -63,7 +63,7 @@ exports.getAvailable = (page)=>{
 
 exports.searchCourse = (q,page)=>{
     return pool.query(
-        `SELECT _id, course_name, subject.subject_name as subject_name, subject.color as color, time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,day_end, fee FROM course, subject
+        `SELECT course._id, course_name, subject.subject_name as subject_name, subject.color as color, time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,day_end, fee FROM course, subject
         WHERE curr_state = 0 
         AND lower(course_name) LIKE $1 
         AND course.subject_id = subject._id

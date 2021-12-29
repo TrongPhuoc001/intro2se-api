@@ -32,29 +32,29 @@ exports.getTable = async (req, res) => {
   switch (req.params.table_name) {
     case "admin":
       const admin_result = await adminModel.findAll;
-
+      console.log(admin_result.rows);
       res.status(200).render("admin", { admin: admin_result.rows });
       break;
     case "course":
       const course_result = await courseModel.getAll(0);
-
+      console.log(course_result.rows);
       res.status(200).render("course", { course: course_result.rows });
       break;
     case "student_course":
       const stu_cour_result = await stu_cour.getAll(0);
-
+      console.log(stu_cour_result.rows);
       res
         .status(200)
         .render("student-course", { student_course: stu_cour_result.rows });
       break;
     case "user":
       const user_result = await userModel.findAll(0);
-
+      console.log(user_result.rows);
       res.status(200).render("user", { user: user_result.rows });
       break;
     case "subject":
       const sub_result = await subjectModel.getAllSubject;
-
+      console.log(sub_result.rows);
       res.status(200).render("subject", { subject: sub_result.rows });
       break;
   }
@@ -100,6 +100,18 @@ exports.postTable = async (req, res) => {
       max_slot,
       fee,
     } = req.body;
+    console.log(
+      course_name,
+      teacher_id,
+      subject_id,
+      time_start,
+      time_end,
+      day_study,
+      day_start,
+      day_end,
+      max_slot,
+      fee
+    );
     pool.query(
       `INSERT INTO course(course_name, teacher_id, subject_id, time_start, time_end, day_study,day_start, day_end, max_slot,fee)
             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);`,

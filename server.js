@@ -15,7 +15,7 @@ const fs = require("fs");
 dotenv.config();
 
 //
-console.log(__dirname);
+
 const hbs = exphbs.create({
   extname: "hbs",
   defaultLayout: "main",

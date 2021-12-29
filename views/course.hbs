@@ -105,6 +105,7 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
+
                         <div class="col-md-12 col-sm-12 ">
                             <div class="x_panel">
                                 <div class="x_title">
@@ -114,15 +115,148 @@
                                 </div>
                                 <div class="x_content">
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="card-box table-responsive">
 
+                                        <div class="col-sm-12">
+
+                                            <div class="card-box table-responsive">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModalScrollable">
+                                                    Thêm khóa học
+                                                </button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModalScrollable" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalScrollableTitle"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    id="exampleModalScrollableTitle">Khóa học
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form id="form" method="post"
+                                                                    action="/admin/dashboard/course">
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Course
+                                                                                Name</span>
+                                                                        </div>
+                                                                        <input type="text" name="course_name"
+                                                                            class="form-control" aria-label="Default"
+                                                                            aria-describedby="inputGroup-sizing-default"
+                                                                            placeholder="Course Name">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Id
+                                                                                teacher</span>
+                                                                        </div>
+                                                                        <input type="text" name="teacher_id"
+                                                                            class="form-control" aria-label="Default"
+                                                                            aria-describedby="inputGroup-sizing-default"
+                                                                            placeholder="id Teacher">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Id
+                                                                                Subject</span>
+                                                                        </div>
+                                                                        <input type="text" name="subject_id"
+                                                                            class="form-control" aria-label="Default"
+                                                                            aria-describedby="inputGroup-sizing-default"
+                                                                            placeholder="id Subject">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Time
+                                                                                Start</span>
+                                                                        </div>
+                                                                        <input type="time" id="time_start"
+                                                                            name="time_start" class="form-control"
+                                                                            placeholder="Time start">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Time
+                                                                                End</span>
+                                                                        </div>
+
+                                                                        <input type="time" id="time_end" name="time_end"
+                                                                            class="form-control" placeholder="Time end">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Day
+                                                                                Study</span>
+                                                                        </div>
+
+                                                                        <input type="text" name="day_study"
+                                                                            class="form-control"
+                                                                            placeholder="Day Study">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Day
+                                                                                Start</span>
+                                                                        </div>
+
+                                                                        <input type="date" name="day_start"
+                                                                            class="form-control"
+                                                                            placeholder="Day Start">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Day
+                                                                                End</span>
+                                                                        </div>
+
+                                                                        <input type="date" name="day_end"
+                                                                            class="form-control" placeholder="Day End">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Max
+                                                                                Slot</span>
+                                                                        </div>
+
+                                                                        <input type="text" name="max_slot"
+                                                                            class="form-control" placeholder="Max Slot">
+                                                                    </div>
+                                                                    <div class="input-group mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">Fee</span>
+                                                                        </div>
+
+                                                                        <input type="text" name="fee"
+                                                                            class="form-control" placeholder="Fee">
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="button" onclick="onSubmitForm()"
+                                                                    class="btn btn-primary">Create</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <table id="datatable" class="table table-striped table-bordered"
                                                     style="width:100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>Id</th>
                                                             <th>Course Name</th>
+                                                            <th>Id teacher</th>
                                                             <th>Teacher</th>
+                                                            <th>Subject</th>
                                                             <th>Time Start</th>
                                                             <th>Time End</th>
                                                             <th>Day Study</th>
@@ -136,8 +270,11 @@
                                                     <tbody>
                                                         {{#each course}}
                                                         <tr>
+                                                            <th>{{this._id}}</th>
                                                             <th>{{this.course_name}}</th>
+                                                            <th>{{this.teacher_id}}</th>
                                                             <th>{{this.teacher_name}}</th>
+                                                            <th>{{this.subject_name}}</th>
                                                             <th>{{this.time_start}}</th>
                                                             <th>{{this.time_end}}</th>
                                                             <th>{{this.day_study}}</th>
@@ -165,3 +302,8 @@
         </div>
     </div>
 </div>
+<script>
+    function onSubmitForm() {
+        document.getElementById("form").submit();
+    }
+</script>

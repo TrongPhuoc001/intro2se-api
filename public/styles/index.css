@@ -2,7 +2,7 @@ body {
   background-color: #212121;
   color: #fff;
 }
-.nav-head{
+.nav-head {
   width: 100%;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -131,4 +131,14 @@ table .odd-row {
     box-shadow: 0 -2em;
     height: 5em;
   }
+}
+
+#hour_list_id > ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#minute_list_id > ol {
+  margin-top: 0;
+  margin-bottom: 0;
 }

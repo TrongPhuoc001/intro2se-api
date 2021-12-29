@@ -121,6 +121,7 @@
                                                     style="width:100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>Id</th>
                                                             <th>Name</th>
                                                             <th>Position</th>
                                                             <th>Office</th>
@@ -134,6 +135,7 @@
                                                     <tbody>
                                                         {{#each user}}
                                                         <tr>
+                                                            <td>{{this._id}}</td>
                                                             <td>{{this.user_name}}</td>
                                                             <td>{{this.type}}</td>
                                                             <td>{{this.email}}</td>

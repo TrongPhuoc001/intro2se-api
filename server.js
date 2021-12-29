@@ -4,11 +4,13 @@ const app = express();
 const dotenv = require("dotenv");
 const exphbs = require("express-handlebars");
 const path = require("path");
+const session = require("express-session");
 const PORT = process.env.PORT || 3000;
 const userRoute = require("./routes/user");
 const courseRoute = require("./routes/course");
 const adminRoute = require("./routes/admin");
 const Markdown = require("markdown-to-html").Markdown;
+const passport = require("./config/passport");
 const fs = require("fs");
 dotenv.config();
 
@@ -29,6 +31,22 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    },
+
+    secret: "cats",
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  // res.locals.authenticated = !req.user.anonymous;
+  next();
+});
 // middlewere
 app.use("/user", userRoute);
 app.use("/course", courseRoute);

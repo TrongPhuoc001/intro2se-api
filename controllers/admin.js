@@ -8,7 +8,7 @@ const adminModel = require("../models/admin");
 const stu_cour = require("../models/stu_course");
 const subjectModel = require("../models/subject");
 exports.index = async (req, res) => {
-  res.redirect("./admin/login");
+  res.redirect("/admin/login");
 };
 
 exports.getLogin = async (req, res) => {
@@ -16,68 +16,55 @@ exports.getLogin = async (req, res) => {
 };
 
 exports.getDashboard = async (req, res) => {
-  const table = [
-    {
-      table_name: "admin",
-      columns: ["admin_name", "password", "type"],
-    },
-    {
-      table_name: "course",
-      columns: [
-        "course_name",
-        "subject_id",
-        "teacher_id",
-        "day_end",
-        "day_start",
-        "day_study",
-        "time_end",
-        "time_start",
-        "fee,max_slot",
-      ],
-    },
-    {
-      table_name: "student_course",
-      columns: ["course_id", "student_id"],
-    },
-    {
-      table_name: "user",
-      columns: ["email", "user_name", "password", "gender", "birthday", "type"],
-    },
-    {
-      table_name: "subject",
-      columns: ["subject_name"],
-    },
-  ];
+  if (!req.user) {
+    res.redirect("/admin/login");
+    return;
+  }
 
   return res.render("index");
 };
 
 exports.getTable = async (req, res) => {
+  if (!req.user) {
+    res.redirect("/admin/login");
+    return;
+  }
   switch (req.params.table_name) {
     case "admin":
       const admin_result = await adminModel.findAll;
-      res.status(200).json(admin_result.rows);
+
+      res.status(200).render("admin", { admin: admin_result.rows });
       break;
     case "course":
       const course_result = await courseModel.getAll(0);
-      res.status(200).json(course_result.rows);
+
+      res.status(200).render("course", { course: course_result.rows });
       break;
     case "student_course":
       const stu_cour_result = await stu_cour.getAll(0);
-      res.status(200).json(stu_cour_result.rows);
+
+      res
+        .status(200)
+        .render("student-course", { student_course: stu_cour_result.rows });
       break;
     case "user":
       const user_result = await userModel.findAll(0);
-      res.status(200).json(user_result.rows);
+
+      res.status(200).render("user", { user: user_result.rows });
       break;
     case "subject":
       const sub_result = await subjectModel.getAllSubject;
-      res.status(200).json(sub_result.rows);
+
+      res.status(200).render("subject", { subject: sub_result.rows });
       break;
   }
 };
 
 exports.delRecord = async (req, res) => {
+  if (!req.user) {
+    res.redirect("/admin/login");
+    return;
+  }
   pool.query(
     `DELETE FROM ${req.params.table_name}
         WHERE _id=${req.params.record_id};`,
@@ -91,6 +78,10 @@ exports.delRecord = async (req, res) => {
 };
 
 exports.postTable = async (req, res) => {
+  if (!req.user) {
+    res.redirect("/admin/login");
+    return;
+  }
   const tb_name = req.params.table_name;
   if (tb_name === "course") {
     const { error } = courseValid(req.body);

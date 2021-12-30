@@ -149,6 +149,7 @@ exports.postTable = async (req, res) => {
     );
   } else if (tb_name === "subject") {
     const { subject_name } = req.body;
+
     pool.query(
       `INSERT INTO subject(subject_name)
             VALUES ($1);`,

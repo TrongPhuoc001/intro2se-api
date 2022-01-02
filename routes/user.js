@@ -12,7 +12,7 @@ router.use(verify);
 
 router.get("/:userId/courses", controller.getCourse);
 router.get('/:userId/allCourses',controller.getAllCourse);
-
+router.get('/:user_id/fee',controller.getFee);
 router.delete("/:user_id/delete",controller.deleteUser);
 
 router.put('/:user_id/update',controller.updateUser)

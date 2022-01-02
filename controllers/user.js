@@ -130,3 +130,21 @@ exports.updateUser = async(req,res)=>{
         return res.status(400).json(err.routine);
     }
 }
+
+exports.getFee = async(req,res)=>{
+    if(req.user._id != req.params.user_id){
+        return res.status(400).json({"message":"Token not match user"});
+    }
+    if(req.user.type === 2){
+        const courseFee = await userModel.getCourseFee(req.user._id);
+        const sumFee = await userModel.getSumFee(req.user._id);
+        return res.status(200).json({"course":courseFee.rows,"sum":sumFee.rows[0].sum})
+    }
+    else if(req.user.type === 1){
+        const courseFee = await userModel.getCourseFeeTeacher(req.user._id);
+        const sumFee = await userModel.getSumFeeTeacher(req.user._id);
+        return res.status(200).json({"course":courseFee.rows,"sum":sumFee.rows[0].sum})
+    }
+
+
+}

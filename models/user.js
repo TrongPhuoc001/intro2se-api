@@ -37,3 +37,35 @@ exports.updateuser = (name,gender,birthday,address,_id)=>{
     )
 }
 
+exports.getSumFee = (user_id)=>{
+    return pool.query(
+        `SELECT SUM(fee) FROM course,"user",student_course 
+        WHERE student_course.course_id = course._id 
+        AND "user"._id = student_course.student_id 
+        AND (course.curr_state = 0 OR course.curr_state =1) 
+        AND "user"._id = $1;`,[user_id]
+    )
+}
+exports.getCourseFee = (user_id)=>{
+    return pool.query(
+        `SELECT course_name, fee FROM course,"user",student_course 
+        WHERE student_course.course_id = course._id 
+        AND "user"._id = student_course.student_id 
+        AND (course.curr_state = 0 OR course.curr_state =1) 
+        AND "user"._id = $1; `,[user_id]
+    )
+}
+exports.getCourseFeeTeacher = (user_id)=>{
+    return pool.query(
+        `SELECT course_name, fee FROM course 
+        WHERE (course.curr_state = 0 OR course.curr_state =1) 
+        AND teacher_id = $1;`,[user_id]
+    )
+}
+exports.getSumFeeTeacher = (user_id)=>{
+    return pool.query(
+        `SELECT SUM(fee) FROM course 
+        WHERE (course.curr_state = 0 OR course.curr_state =1) 
+        AND teacher_id = $1;`,[user_id]
+    )
+}

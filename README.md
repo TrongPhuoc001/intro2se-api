@@ -33,6 +33,10 @@ fetch("http://intro2se-api.herokuapp.com/user/register", {
 });
 ```
 
+    Lưu ý:
+    - Type: 1 là giáo viên
+    - Type: 2 là học sinh
+
 Response :
 All error in status 400
 

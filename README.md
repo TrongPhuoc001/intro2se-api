@@ -33,9 +33,9 @@ fetch("http://intro2se-api.herokuapp.com/user/register", {
 });
 ```
 
-    Lưu ý:
-    - Type: 1 là giáo viên
-    - Type: 2 là học sinh
+    Note:
+    - Type: 1 teacher
+    - Type: 2 student
 
 Response :
 All error in status 400
@@ -49,9 +49,11 @@ All error in status 400
 {
     "message": "\"name\" length must be at least 6 characters long"
 }
+//email validation error
 {
     "message": "\"email\" must be a valid email"
 }
+//password error
 {
     "message": "\"password\" length must be at least 6 characters long"
 }
@@ -80,6 +82,10 @@ fetch("http://intro2se-api.herokuapp.com/user/login", {
 });
 ```
 
+    Note:
+    - email: user input
+    - password: user input
+
 token in Response.header :
 
 ```javascript
@@ -103,6 +109,10 @@ Response.body :
     }
 }
 ```
+
+    Note:
+    - Type: 1 teacher
+    - Type: 2 student
 
 add token in request.header with "auth" key for other user and course api
 
@@ -177,11 +187,24 @@ OUT PUT
 ];
 ```
 
+    Note
+    - curr_state: 0 course is in time register
+    - curr_state: 1 course is in time studying
+    - curr_state: 2 course was end
+
 ### Delete user
 
 URL : "http://intro2se-api.herokuapp.com/user/delete "  
 METHOD : DELETE  
 TOKEN require
+OUTPUT
+
+```javascript
+//with out token
+"message":"Token not match user"
+//with token
+"message":"Delete success."
+```
 
 ## Course route
 
@@ -264,6 +287,11 @@ OUT PUT
 ];
 ```
 
+    Note
+    - curr_state: 0 course is in time register
+    - curr_state: 1 course is in time studying
+    - curr_state: 2 course was end
+
 ### Start course
 
 URL: "http://intro2se-api.herokuapp.com/course/:user_id/start?courseId=:course_id "  
@@ -280,11 +308,19 @@ fetch("http://intro2se-api.herokuapp.com/course/1/start?courseId=1", {
 });
 ```
 
-PUT SUCCESS
+    Note: set to start course with courseId
+    - curr_state: 0 course is in time register
+    - curr_state: 1 course is in time studying
+    - curr_state: 2 course was end
+
+OUTPUT
 
 ```javascript
 {
-    "message": "Course start"
+  //fail with out token
+  "message": "token not match user"
+  //successfully
+  "message": "Course start"
 }
 ```
 
@@ -391,6 +427,9 @@ OUT PUT:
 }
 ```
 
+    Note:
+    - day_study: number of lesson
+
 ### Sign in a course
 
 URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign "  
@@ -401,11 +440,15 @@ TOKEN require
 
 this api will create a new course
 
+    Note:
+    - Type: 1 teacher
+    - Type: 2 student
+
 ```javascript
 fetch("http://intro2se-api.herokuapp.com/course/1/sign", {
   header: {
     "Content-Type": "application/json",
-    auth: "bla..blaa..",
+    auth: "token user",
   },
   method: POST,
   body: {

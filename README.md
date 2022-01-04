@@ -5,19 +5,19 @@ out put có thể khác nên là cứ gọi thử xem dữ liệu thế nào :))
 
 ## Admin routes
 
-Main url: 'http://intro2se-api.herokuapp.com/admin/login
+Main url: 'https://intro2se-api.herokuapp.com/admin/login
 
 ## User routes
 
-Main url : 'http://intro2se-api.herokuapp.com/user '
+Main url : 'https://intro2se-api.herokuapp.com/user '
 
 ### Register
 
-Url : 'http://intro2se-api.herokuapp.com/user/register '  
+Url : 'https://intro2se-api.herokuapp.com/user/register '  
 Method : POST
 
 ```javascript
-fetch("http://intro2se-api.herokuapp.com/user/register", {
+fetch("https://intro2se-api.herokuapp.com/user/register", {
   header: {
     "Content-Type": "application/json",
   },
@@ -70,10 +70,10 @@ Create success will get response in status 200 and message
 
 ### Login
 
-Url : 'http://intro2se-api.herokuapp.com/user/login '
+Url : 'https://intro2se-api.herokuapp.com/user/login '
 
 ```javascript
-fetch("http://intro2se-api.herokuapp.com/user/login", {
+fetch("https://intro2se-api.herokuapp.com/user/login", {
   header: {
     "Content-Type": "application/json",
   },
@@ -118,13 +118,13 @@ add token in request.header with "auth" key for other user and course api
 
 ### User courses - on studying
 
-URL : 'http://intro2se-api.herokuapp.com/user/:user_id/courses '  
+URL : 'https://intro2se-api.herokuapp.com/user/:user_id/courses '  
 TOKEN require  
 add token in header  
 Example
 
 ```javascript
-fetch("http://intro2se-api.herokuapp.com/user/3/courses", {
+fetch("https://intro2se-api.herokuapp.com/user/3/courses", {
   header: {
     auth: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjMsInR5cGUiOjIsImlhdCI6MTYzNTk4Nzg4N30.5G8SzB6aO-35hQ1rQgBKYOAX5x8f6Xkb2f3gyh8bKHg",
   },
@@ -158,7 +158,7 @@ RESPONSE
 
 ### User course - all been signed
 
-URL : 'http://intro2se-api.herokuapp.com/user/:user_id/allCourses '
+URL : 'https://intro2se-api.herokuapp.com/user/:user_id/allCourses '
 
 OUT PUT
 
@@ -192,9 +192,42 @@ OUT PUT
     - curr_state: 1 course is in time studying
     - curr_state: 2 course was end
 
+### Fee 
+URL : "https://intro2se-api.herokuapp.com/user/:user_id/fee "
+METHOD: GET  
+TOKEN: REQUIRE  
+Example : "https://intro2se-api.herokuapp.com/user/6/fee "  
+OUT PUT  
+```javascript
+{
+    "course": [
+        {
+            "course_name": "Hệ quản trị cơ sở dữ liệu",
+            "fee": "$3,000,000.00"
+        },
+        {
+            "course_name": "Lập TrÌnh Hướng Đối Tượng",
+            "fee": "$3,000,000.00"
+        },
+        {
+            "course_name": "Kĩ Thuật Lập TrÌnh",
+            "fee": "$3,000,000.00"
+        },
+        {
+            "course_name": "Nhập môn khoa học dữ liệu",
+            "fee": "$3,000,000.00"
+        },
+        {
+            "course_name": "Cơ sở trí tuệ nhân tạo",
+            "fee": "$3,000,000.00"
+        }
+    ],
+    "sum": "$15,000,000.00"
+}
+```
 ### Delete user
 
-URL : "http://intro2se-api.herokuapp.com/user/delete "  
+URL : "https://intro2se-api.herokuapp.com/user/:user_id/delete "  
 METHOD : DELETE  
 TOKEN require
 OUTPUT
@@ -210,7 +243,7 @@ OUTPUT
 
 ### GET all subject
 
-URL : "http://intro2se-api.herokuapp.com/course/subject "
+URL : "https://intro2se-api.herokuapp.com/course/subject "
 
 OUT PUT
 
@@ -251,7 +284,7 @@ OUT PUT
 
 ### All courses
 
-URL : "http://intro2se-api.herokuapp.com/course/all?page=... "  
+URL : "https://intro2se-api.herokuapp.com/course/all?page=... "  
 {?page} is OPTIONAL, 0 by DEFAULT
 
 OUT PUT
@@ -294,14 +327,14 @@ OUT PUT
 
 ### Start course
 
-URL: "http://intro2se-api.herokuapp.com/course/:user_id/start?courseId=:course_id "  
+URL: "https://intro2se-api.herokuapp.com/course/:user_id/start?courseId=:course_id "  
 TOKEN REQUIRE  
 METHOD : PUT
 
 REQUEST
 
 ```javascript
-fetch("http://intro2se-api.herokuapp.com/course/1/start?courseId=1", {
+fetch("https://intro2se-api.herokuapp.com/course/1/start?courseId=1", {
   header: {
     auth: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjMsInR5cGUiOjIsImlhdCI6MTYzNTk4Nzg4N30.5G8SzB6aO-35hQ1rQgBKYOAX5x8f6Xkb2f3gyh8bKHg",
   },
@@ -326,7 +359,7 @@ OUTPUT
 
 ### Available courses
 
-URL : "http://intro2se-api.herokuapp.com/course/available?page=... "
+URL : "https://intro2se-api.herokuapp.com/course/available?page=... "
 
 {?page} is optional, 0 by DEFAULT
 
@@ -334,105 +367,212 @@ OUT PUT
 
 ```javascript
 [
-  {
-    _id: 2,
-    course_name: "Cơ sở dữ liệu",
-    subject_id: 2,
-    time_start: "07:30:00",
-    time_end: "11:00:00",
-    day_study: 3,
-    day_start: "2021-08-23T17:00:00.000Z",
-    day_end: "2021-12-23T17:00:00.000Z",
-    fee: "$1,000,000.00",
-  },
+    {
+        "_id": 6,
+        "course_name": "Độ phức tạp thuật toán",
+        "subject_name": "Khoa học máy tính",
+        "color": "#C1AC95",
+        "teacher_id": 3,
+        "teacher_name": "Giáo Viên 3",
+        "time_start": "07:30:00",
+        "time_end": "10:30:00",
+        "day_study": 5,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 7,
+        "course_name": "Mạng Máy Tính",
+        "subject_name": "Mạng Máy tính",
+        "color": "#F2F4D1",
+        "teacher_id": 4,
+        "teacher_name": "Giáo Viên 4",
+        "time_start": "07:30:00",
+        "time_end": "10:30:00",
+        "day_study": 5,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 8,
+        "course_name": "Hệ thống viễn thông",
+        "subject_name": "Mạng Máy tính",
+        "color": "#F2F4D1",
+        "teacher_id": 4,
+        "teacher_name": "Giáo Viên 4",
+        "time_start": "07:30:00",
+        "time_end": "10:30:00",
+        "day_study": 2,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 9,
+        "course_name": "Nhập Môn Công Nghệ Phần Mềm",
+        "subject_name": "Phần Mềm",
+        "color": "#89A3B2",
+        "teacher_id": 1,
+        "teacher_name": "Giáo Viên 1",
+        "time_start": "07:30:00",
+        "time_end": "10:30:00",
+        "day_study": 2,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 10,
+        "course_name": "Kiến Trúc Phần Mềm",
+        "subject_name": "Phần Mềm",
+        "color": "#89A3B2",
+        "teacher_id": 1,
+        "teacher_name": "Giáo Viên 1",
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 5,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 11,
+        "course_name": "Cơ sở trí tuệ nhân tạo",
+        "subject_name": "Trí tuệ nhân tạo",
+        "color": "#F6EABE",
+        "teacher_id": 5,
+        "teacher_name": "Giáo Viên 5",
+        "time_start": "07:30:00",
+        "time_end": "10:30:00",
+        "day_study": 6,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 12,
+        "course_name": "Nhập môn học máy",
+        "subject_name": "Trí tuệ nhân tạo",
+        "color": "#F6EABE",
+        "teacher_id": 5,
+        "teacher_name": "Giáo Viên 5",
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 6,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 13,
+        "course_name": "Mã hóa ứng dụng",
+        "subject_name": "An Toàn Thông Tin",
+        "color": "#B5CDA3",
+        "teacher_id": 4,
+        "teacher_name": "Giáo Viên 4",
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 5,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 14,
+        "course_name": "Nhập môn mã hóa - mật mã",
+        "subject_name": "An Toàn Thông Tin",
+        "color": "#B5CDA3",
+        "teacher_id": 4,
+        "teacher_name": "Giáo Viên 4",
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 6,
+        "day_start": "2021-08-24"
+    },
+    {
+        "_id": 20,
+        "course_name": "Hệ Điều Hành",
+        "subject_name": "Hệ thống máy tính",
+        "color": "#C9E4C5",
+        "teacher_id": 3,
+        "teacher_name": "Giáo Viên 3",
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 3,
+        "day_start": "2021-08-24"
+    }
 ];
 ```
 
 ### Search available by course_name
 
-URL : "http://intro2se-api.herokuapp.com/course/search?q=:searchString&page=... "  
+URL : "https://intro2se-api.herokuapp.com/course/search?q=:searchString&state=:course_state&page=... "  
 {q} : empty string by DEFAULT => get all availble course  
+{state} : course state, can be multiple separate by ',', 0 by default
 {page} : OPTIONAL, 0 by DEFAULT
 
 Example  
 REQUEST
 
 ```javascript
-fetch("http://intro2se-api.herokuapp.com/course/search?q=lập ");
+fetch("https://intro2se-api.herokuapp.com/course/search?q=lập&state=0,1 ");
 ```
 
 OUT PUT
 
 ```javascript
 [
-  {
-    _id: 4,
-    course_name: "Kĩ Thuật Lập Trình",
-    subject_id: 1,
-    time_start: "12:30:00",
-    time_end: "16:30:00",
-    day_study: 6,
-    day_start: "2021-08-23T17:00:00.000Z",
-    day_end: "2021-12-23T17:00:00.000Z",
-    fee: "$3,000,000.00",
-  },
-  {
-    _id: 5,
-    course_name: "Lập Trình Hướng Đối Tượng",
-    subject_id: 1,
-    time_start: "07:30:00",
-    time_end: "10:30:00",
-    day_study: 6,
-    day_start: "2021-08-23T17:00:00.000Z",
-    day_end: "2021-12-23T17:00:00.000Z",
-    fee: "$3,000,000.00",
-  },
-  {
-    _id: 1,
-    course_name: "Nhập Môn Lập Trình",
-    subject_id: 1,
-    time_start: "07:30:00",
-    time_end: "11:30:00",
-    day_study: 2,
-    day_start: "2021-08-23T17:00:00.000Z",
-    day_end: "2021-08-23T17:00:00.000Z",
-    fee: "$1,000,000.00",
-  },
+    {
+        "_id": 1,
+        "course_name": "Kĩ Thuật Lập TrÌnh",
+        "subject_name": "Lập TrÌnh",
+        "color": "#ADC2A9",
+        "time_start": "12:30:00",
+        "time_end": "16:30:00",
+        "day_study": 4,
+        "day_start": "2021-08-24",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "curr_state": 1,
+        "fee": "$3,000,000.00"
+    },
+    {
+        "_id": 2,
+        "course_name": "Lập TrÌnh Hướng Đối Tượng",
+        "subject_name": "Lập TrÌnh",
+        "color": "#ADC2A9",
+        "time_start": "07:30:00",
+        "time_end": "10:30:00",
+        "day_study": 3,
+        "day_start": "2021-08-24",
+        "day_end": "2021-12-23T17:00:00.000Z",
+        "curr_state": 1,
+        "fee": "$3,000,000.00"
+    }
 ];
 ```
 
 ### GET information of a course
 
-URL : "http://intro2se-api.herokuapp.com/course/:course_id "
+URL : "https://intro2se-api.herokuapp.com/course/:course_id "
 
+example course_id = 1:  
 OUT PUT:
 
 ```javascript
 {
-    "teacher_name": "Nguyễn Trọng Phước",
+    "teacher_name": "Giáo Viên 1",
+    "subject_name": "Lập TrÌnh",
+    "color": "#ADC2A9",
     "_id": 1,
     "subject_id": 1,
-    "course_name": "Nhập Môn Lập Trình",
+    "course_name": "Kĩ Thuật Lập TrÌnh",
+    "description": "Môn cơ sở ngành",
     "teacher_id": 1,
-    "time_start": "07:30:00",
-    "time_end": "11:30:00",
-    "day_study": 2,
-    "day_start": "2021-08-23T17:00:00.000Z",
-    "day_end": "2021-08-23T17:00:00.000Z",
-    "room": null,
-    "max_slot": 100,
-    "fee": "$1,000,000.00",
+    "time_start": "12:30:00",
+    "time_end": "16:30:00",
+    "day_study": 4,
+    "day_start": "2021-08-24T00:00:00.000Z",
+    "day_end": "2021-12-24T00:00:00.000Z",
+    "room": "F102",
+    "max_slot": 150,
+    "fee": "$3,000,000.00",
     "curr_state": 1,
-    "create_time": "2021-11-02T06:37:42.631Z"
+    "create_time": "2021-12-22T13:12:45.986Z"
 }
 ```
 
     Note:
-    - day_study: number of lesson
+    - day_study: day of week
 
 ### Sign in a course
 
-URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign "  
+URL : "https://intro2se-api.herokuapp.com/course/:user_id/sign "  
 METHOD : POST  
 TOKEN require
 
@@ -445,7 +585,7 @@ this api will create a new course
     - Type: 2 student
 
 ```javascript
-fetch("http://intro2se-api.herokuapp.com/course/1/sign", {
+fetch("https://intro2se-api.herokuapp.com/course/1/sign", {
   header: {
     "Content-Type": "application/json",
     auth: "token user",
@@ -454,6 +594,7 @@ fetch("http://intro2se-api.herokuapp.com/course/1/sign", {
   body: {
     course_name: "Cơ sở dữ liệu",
     subject_id: 2,
+    description: "bla blu bli ble",
     time_start: "07:30",
     time_end: "11:00",
     day_study: 3,
@@ -471,10 +612,10 @@ status 200 is success
 #### If user type 2 aka student
 
 this api will sign this user to the course
-URL : "http://intro2se-api.herokuapp.com/course/:user_id/sign?courseId=:course_id "
+URL : "https://intro2se-api.herokuapp.com/course/:user_id/sign?courseId=:course_id "
 
 ```javascript
-fetch("http://intro2se-api.herokuapp.com/course/6/sign", {
+fetch("https://intro2se-api.herokuapp.com/course/6/sign", {
   header: {
     "Content-Type": "application/json",
     auth: "bla..blaa..",
@@ -488,6 +629,6 @@ fetch("http://intro2se-api.herokuapp.com/course/6/sign", {
 
 ### Unsign
 
-URL : "http://intro2se-api.herokuapp.com/course/:user_id/unsign/:course_id "  
+URL : "https://intro2se-api.herokuapp.com/course/:user_id/unsign/:course_id "  
 METHOD : DELETE
 TOKEN require

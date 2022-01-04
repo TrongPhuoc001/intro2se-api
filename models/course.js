@@ -61,13 +61,13 @@ exports.getAvailable = (page)=>{
     )
 }
 
-exports.searchCourse = (q,page)=>{
+exports.searchCourse = (q,page,stateArr)=>{
     return pool.query(
-        `SELECT course._id, course_name, subject.subject_name as subject_name, subject.color as color, time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,day_end, fee FROM course, subject
-        WHERE curr_state = 0 
-        AND lower(course_name) LIKE $1 
+        `SELECT course._id, course_name, subject.subject_name as subject_name, subject.color as color, time_start, time_end, day_study,TO_CHAR(day_start, 'yyyy-MM-DD') as day_start,day_end,curr_state ,fee FROM course, subject
+        WHERE curr_state = ANY($1) 
+        AND lower(course_name) LIKE $2 
         AND course.subject_id = subject._id
-        ORDER BY create_time DESC LIMIT $2 OFFSET $3;`,[q,limit,parseInt(page)*limit]
+        ORDER BY create_time DESC LIMIT $3 OFFSET $4;`,[stateArr,q,limit,parseInt(page)*limit]
     )
 }
 
@@ -81,10 +81,10 @@ exports.findOne = (_id)=>{
     )
 }
 
-exports.addCourse = (course_name,teacher_id, subject_id, time_start, time_end, day_study, day_start, day_end, max_slot,fee)=>{
+exports.addCourse = (course_name,teacher_id, subject_id,description ,time_start, time_end, day_study, day_start, day_end, max_slot,fee)=>{
     return pool.query(
-        `INSERT INTO course(course_name, teacher_id, subject_id, time_start, time_end, day_study, day_start, day_end, max_slot,fee)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);`, [course_name,teacher_id, subject_id, time_start, time_end, day_study, day_start, day_end, max_slot,fee]
+        `INSERT INTO course(course_name, teacher_id, subject_id,description ,time_start, time_end, day_study, day_start, day_end, max_slot,fee)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11);`, [course_name,teacher_id, subject_id, description,time_start, time_end, day_study, day_start, day_end, max_slot,fee]
     )
 }
 

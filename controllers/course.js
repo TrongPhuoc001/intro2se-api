@@ -36,9 +36,16 @@ exports.getCourseSubject = async (req, res) => {
 
 exports.searchCourse = async (req, res) => {
   const q = "%" + (req.query.q || "").toLowerCase() + "%";
+  let state = req.query.state;
+  if(state){
+      state = state.split(',');
+  }
+  else{
+      state=['0'];
+  }
   const page = req.query.page || 0;
   try {
-    const result = await courseModel.searchCourse(q, page);
+    const result = await courseModel.searchCourse(q, page,state);
     return res.json(result.rows);
   } catch (err) {
     console.log(err);
@@ -71,6 +78,7 @@ exports.postCourse = async (req, res) => {
     const {
       course_name,
       subject_id,
+      description,
       time_start,
       time_end,
       day_study,
@@ -84,6 +92,7 @@ exports.postCourse = async (req, res) => {
         course_name,
         req.user._id,
         subject_id,
+        description,
         time_start,
         time_end,
         day_study,

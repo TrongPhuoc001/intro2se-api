@@ -143,3 +143,10 @@ table .odd-row {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+#course > :hover {
+  background-color: rgb(212, 18, 230) !important;
+}
+.selected {
+  background-color: rgb(212, 18, 230) !important;
+}

@@ -1,7 +1,7 @@
 const pool = require("../config/dbconnect");
 const verify = require("../helper/verifyToken");
 const { courseValid } = require("../helper/validation");
-
+const stu_cour = require("../models/stu_course");
 const courseModel = require("../models/course");
 const subjectModel = require("../models/subject");
 const limit = 10;
@@ -37,15 +37,14 @@ exports.getCourseSubject = async (req, res) => {
 exports.searchCourse = async (req, res) => {
   const q = "%" + (req.query.q || "").toLowerCase() + "%";
   let state = req.query.state;
-  if(state){
-      state = state.split(',');
-  }
-  else{
-      state=['0'];
+  if (state) {
+    state = state.split(",");
+  } else {
+    state = ["0"];
   }
   const page = req.query.page || 0;
   try {
-    const result = await courseModel.searchCourse(q, page,state);
+    const result = await courseModel.searchCourse(q, page, state);
     return res.json(result.rows);
   } catch (err) {
     console.log(err);
@@ -57,6 +56,7 @@ exports.getCourse = async (req, res) => {
   const course_id = req.params.courseId;
   try {
     const result = await courseModel.findOne(course_id);
+
     if (result.rows.length > 0) {
       return res.status(200).json(result.rows[0]);
     }
@@ -182,4 +182,10 @@ exports.endCourse = async (req, res) => {
   } catch (err) {
     return res.status(400).json(err.routine);
   }
+};
+
+exports.getCourseUser = async (req, res) => {
+  const { courseId } = req.params;
+  const stu_cour_result = await stu_cour.getListUserInCourse(courseId, 0);
+  res.json(stu_cour_result.rows);
 };

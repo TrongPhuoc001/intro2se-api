@@ -27,12 +27,13 @@ body {
   background-color: #6e6e6e;
 }
 .content {
-  width: 80%;
-  padding-left: 5%;
+  width: 100%;
+  margin-top: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 10px;
 }
 .add-div {
   align-self: flex-start;

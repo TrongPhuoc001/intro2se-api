@@ -12,7 +12,8 @@ exports.index = async (req, res) => {
 };
 
 exports.getLogin = async (req, res) => {
-  res.render("login");
+  const err = req.query.error;
+  res.render("login", { err: err });
 };
 
 exports.getDashboard = async (req, res) => {

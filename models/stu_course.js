@@ -22,3 +22,9 @@ exports.getListUserInCourse = (courseId, page) => {
     [page * 10]
   );
 };
+
+exports.checkSign = (user_id,course_id)=>{
+  return pool.query(
+    `SELECT * FROM student_course WHERE student_id = $1 AND course_id = $2;`,[user_id,course_id]
+  )
+}

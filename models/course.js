@@ -118,8 +118,8 @@ exports.deleteCourse = (courseId)=>{
 
 exports.unsign = (userId,courseId)=>{
     return pool.query(
-        `DELETE FROM courses_stu
-        WHERE stu_id = $1 AND course_id = $2;`,[userId,courseId]
+        `DELETE FROM student_course
+        WHERE student_id = $1 AND course_id = $2;`,[userId,courseId]
     )
 }
 

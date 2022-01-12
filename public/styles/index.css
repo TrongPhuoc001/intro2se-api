@@ -145,8 +145,8 @@ table .odd-row {
 }
 
 #course > :hover {
-  background-color: rgb(212, 18, 230) !important;
+  background-color: rgb(157, 177, 229) !important;
 }
 .selected {
-  background-color: rgb(212, 18, 230) !important;
+  background-color: rgb(157, 177, 229) !important;
 }

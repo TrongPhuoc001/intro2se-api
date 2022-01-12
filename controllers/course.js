@@ -109,13 +109,17 @@ exports.postCourse = async (req, res) => {
   if (req.user.type === 2) {
     const { course_id } = req.body;
     try {
+      const checkSigned = await stu_cour.checkSign(req.user._id,course_id);
+      if(checkSigned.rows.length>0){
+        return res.status(400).json({message:"Already signed"})
+      }
       const courseStatus = await courseModel.getCourseStatus(course_id);
       course_state = courseStatus.rows[0];
       if (parseInt(course_state.curr_state) === 0) {
         const countStudent = await courseModel.countCourseStudent(course_id);
         if (countStudent.rows[0].count < course_state.max_slot) {
           await courseModel.signToCourse(req.user._id, course_id);
-          return res.status(200).json({ message: "sign success" });
+          return res.status(200).json({ message: "Sign success" });
         } else {
           return res.status(400).json({ message: "Course is full" });
         }
@@ -123,7 +127,7 @@ exports.postCourse = async (req, res) => {
         return res.status(400).json({ message: "Course had started" });
       }
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(500).json(err);
     }
   }
 };

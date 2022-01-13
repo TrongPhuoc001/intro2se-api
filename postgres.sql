@@ -1,7 +1,7 @@
 Create or replace function random_color() returns text as
 $$
 declare
-  chars text[] := '{#F6D7A7,#F6EABE,#C8E3D4,#87AAAA,#FEF5ED,#D3E4CD,#ADC2A9,#99A799,#FAEBE0,#C9E4C5,#B5CDA3,#C1AC95,#F2F4D1,#B2D3BE,#89A3B2,#5E6073}';
+  chars text[] := '{#E4EDFF,#C1F5FF,#93FFFF,#8AFFE2,#B6FFA8,#A7FCF8,#9CFFE2,#ABFFC0,#E5DFF5,#FFD9F8,#FFDDB6,#FFD1E2,#FFD1B7,#FFD2EA,#FFCFCC,#97FFD0,#8CFFEB}';
   result text := '';
   i integer := 0;
 begin

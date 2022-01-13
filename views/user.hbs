@@ -2,7 +2,7 @@
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
+                <div class="left_col scroll-view" style="position:fixed; top:0;">
                     <div class="navbar nav_title" style="border: 0;">
                         <a href="/admin/dashboard" class="site_title"><i class="fa fa-paw"></i>
                             <span>Portality</span></a>
@@ -127,8 +127,9 @@
                                                             <th>Type</th>
                                                             <th>Email</th>
                                                             <th>Gender</th>
-                                                            <th>Birthday/th>
+                                                            <th>Birthday</th>
                                                             <th>Address</th>
+                                                            <th>Ban</th>
                                                         </tr>
                                                     </thead>
 
@@ -143,6 +144,10 @@
                                                             <td>{{this.gender}}</td>
                                                             <td>{{this.birthday}}</td>
                                                             <td>{{this.address}}</td>
+                                                            <td>
+                                                                <button type="button"
+                                                                    class="btn btn-outline-dark">Ban</button>
+                                                            </td>
                                                         </tr>
                                                         {{/each}}
 

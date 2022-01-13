@@ -13,6 +13,7 @@ const Markdown = require("markdown-to-html").Markdown;
 const passport = require("./config/passport");
 const express_handlebars_sections = require("express-handlebars-sections");
 const apiUserRouter = require("./api/user");
+const apiCourseRouter = require("./api/course");
 
 const fs = require("fs");
 dotenv.config();
@@ -52,6 +53,7 @@ app.use(
     secret: "cats",
   })
 );
+app.use("/api/course", apiCourseRouter);
 app.use("/api/user", apiUserRouter);
 app.use(passport.initialize());
 app.use(passport.session());

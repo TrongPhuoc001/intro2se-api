@@ -119,7 +119,7 @@
                                             <div class="card-box table-responsive">
 
                                                 <table id="datatable" class="table table-striped table-bordered"
-                                                    style="width:100%">
+                                                    style="width:100%" data-source="data-source">
                                                     <thead>
                                                         <tr>
                                                             <th>Id</th>
@@ -158,43 +158,43 @@
 {{#section 'script'}}
 <script>
     function loadData() {
-        $.getJSON(`/api/user/listUser`, function (data) {
-            console.log(data);
-            let html = ``;
-            for (const item of data) {
-                if (item.status) {
-                    html += `<tr>
-                                                            <td>${item._id}</td>
-                                                            <td>${item.user_name}</td>
-                                                            <td>${item.type}</td>
-                                                            <td>${item.email}</td>
-                                                            <td>${item.gender}</td>
-                                                            <td>${item.birthday}</td>
-                                                            <td>${item.address}</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-outline-dark" onclick="banUser(${item._id})"
-                                                                    >Ban</button>
-                                                            </td>
-                                                        </tr>`
-                }
-                else {
-                    html += `<tr>
-                                                            <td>${item._id}</td>
-                                                            <td>${item.user_name}</td>
-                                                            <td>${item.type}</td>
-                                                            <td>${item.email}</td>
-                                                            <td>${item.gender}</td>
-                                                            <td>${item.birthday}</td>
-                                                            <td>${item.address}</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-outline-dark"
+        $.ajax({
+            url: `/api/user/listUser`,
+            type: "GET",
+
+            success: function (data) {
+
+
+
+                $('#datatable').dataTable({
+                    destroy: true,
+                    "aaData": data,
+                    columns: [
+                        { "data": "_id" },
+                        { "data": "user_name" },
+                        { "data": "type" },
+                        { "data": "email" },
+                        { "data": "gender" },
+                        { "data": "birthday" },
+                        { "data": "address" },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                if (!data.status) {
+                                    return `<button type="button" class="btn btn-outline-dark"
                                                                     style="background-color:red"
-                                                                    onclick="unBanUser(${item._id})">Ban</button>
-                                                            </td>
-                                                        </tr>`
-                }
+                                                                    onclick="unBanUser(${data._id})">Ban</button>`;
+                                } else {
+                                    return `<button type="button" class="btn btn-outline-dark" onclick="banUser(${data._id})"
+                                                                    >Ban</button>`
+                                }
+                            }
+                        }
+                    ],
+
+                });
             }
-            $('#dataUser').html(html);
         });
     }
     loadData();

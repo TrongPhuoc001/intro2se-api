@@ -9,9 +9,18 @@ const limit = 10;
 exports.getAll = async (req, res) => {
   const page = req.query.page || 0;
   try {
-    const result = await courseModel.getAll(page);
+    let result = await courseModel.getAll(page);
+    for await (let item of result.rows) {
+      if (!item.status) {
+        const index = result.rows.indexOf(item);
+        if (index > -1) {
+          result.rows.splice(index, 1);
+        }
+      }
+    }
     return res.status(200).json(result.rows);
   } catch (err) {
+    console.log(err);
     return res.status(400).json(err.routine);
   }
 };
@@ -109,9 +118,9 @@ exports.postCourse = async (req, res) => {
   if (req.user.type === 2) {
     const { course_id } = req.body;
     try {
-      const checkSigned = await stu_cour.checkSign(req.user._id,course_id);
-      if(checkSigned.rows.length>0){
-        return res.status(400).json({message:"Already signed"})
+      const checkSigned = await stu_cour.checkSign(req.user._id, course_id);
+      if (checkSigned.rows.length > 0) {
+        return res.status(400).json({ message: "Already signed" });
       }
       const courseStatus = await courseModel.getCourseStatus(course_id);
       course_state = courseStatus.rows[0];

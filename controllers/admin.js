@@ -37,9 +37,10 @@ exports.getTable = async (req, res) => {
       res.status(200).render("admin", { admin: admin_result.rows });
       break;
     case "course":
-      const course_result = await courseModel.getAll(0);
-      console.log(course_result.rows);
-      res.status(200).render("course", { course: course_result.rows });
+      //const course_result = await courseModel.getAll(0);
+      //console.log(course_result.rows);
+      //res.status(200).render("course", { course: course_result.rows });
+      res.status(200).render("course");
       break;
     case "student_course":
       const stu_cour_result = await stu_cour.getAll(0);

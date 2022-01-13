@@ -136,28 +136,13 @@
                                                             <th>Day Study</th>
                                                             <th>Day Start</th>
                                                             <th>Current State</th>
-
+                                                            <th>Ban</th>
                                                         </tr>
                                                     </thead>
 
 
                                                     <tbody id="course">
-                                                        {{#each course}}
-                                                        <tr data-toggle="modal" data-target="#exampleModalScrollable">
-                                                            <td>{{this._id}}</td>
-                                                            <td>{{this.course_name}}</td>
-                                                            <td>{{this.teacher_id}}</td>
-                                                            <td>{{this.teacher_name}}</td>
-                                                            <td>{{this.subject_name}}</td>
-                                                            <td>{{this.time_start}}</td>
-                                                            <td>{{this.time_end}}</td>
-                                                            <td>{{this.day_study}}</td>
-                                                            <td>{{this.day_start}}</td>
-                                                            <td>{{this.curr_state}}</td>
 
-
-                                                        </tr>
-                                                        {{/each}}
 
                                                     </tbody>
                                                 </table>
@@ -204,6 +189,8 @@
     </div>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{{#section 'script'}}
+
 <script>
     $("#course tr").click(async function () {
         $(this).addClass('selected').siblings().removeClass('selected');
@@ -229,7 +216,82 @@
         $("#form").html(html);
         $('#exampleModal').trigger('focus')
     });
-
-
-
 </script>
+
+<script>
+    function loadData() {
+        $.ajax({
+            url: `/api/course/listCourse`,
+            type: "GET",
+
+            success: function (data) {
+
+
+
+                $('#datatable').dataTable({
+                    destroy: true,
+                    "aaData": data,
+                    columns: [
+                        { "data": "_id" },
+                        { "data": "course_name" },
+                        { "data": "teacher_id" },
+                        { "data": "teacher_name" },
+                        { "data": "subject_name" },
+                        { "data": "time_start" },
+                        { "data": "time_end" },
+                        { "data": "day_study" },
+                        { "data": "day_start" },
+                        { "data": "curr_state" },
+                        {
+                            "mData": null,
+                            "bSortable": false,
+                            "mRender": function (data, type, full) {
+                                if (!data.status) {
+                                    return `<button type="button" class="btn btn-outline-dark"
+                                                                    style="background-color:red"
+                                                                    onclick="unBanCourse(${data._id})">Ban</button>`;
+                                } else {
+                                    return `<button type="button" class="btn btn-outline-dark" onclick="banCourse(${data._id})"
+                                                                    >Ban</button>`
+                                }
+                            }
+                        }
+                    ],
+
+                });
+            }
+        });
+    }
+    loadData();
+</script>
+
+<script>
+    function banCourse(id) {
+        console.log("hehe")
+        $.ajax({
+            url: `/api/course/banCourse/${id}`,
+            type: 'PUT',
+
+            success: function (data) {
+                console.log(data)
+                loadData();
+                alert('Ban OK');
+            }
+        });
+    }
+
+    function unBanCourse(id) {
+        console.log("huhu")
+        $.ajax({
+            url: `/api/course/unBanCourse/${id}`,
+            type: 'PUT',
+
+            success: function (data) {
+                console.log(data)
+                loadData();
+                alert('unBan OK');
+            }
+        });
+    }
+</script>
+{{/section}}

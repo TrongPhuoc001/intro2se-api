@@ -50,8 +50,9 @@ exports.getTable = async (req, res) => {
       break;
     case "user":
       const user_result = await userModel.findAll(0);
-      console.log(user_result.rows);
-      res.status(200).render("user", { user: user_result.rows });
+      //console.log(user_result.rows);
+      //res.status(200).render("user", { user: user_result.rows });
+      res.status(200).render("user");
       break;
     case "subject":
       const sub_result = await subjectModel.getAllSubject;

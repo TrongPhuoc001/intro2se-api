@@ -11,6 +11,9 @@ const courseRoute = require("./routes/course");
 const adminRoute = require("./routes/admin");
 const Markdown = require("markdown-to-html").Markdown;
 const passport = require("./config/passport");
+const express_handlebars_sections = require("express-handlebars-sections");
+const apiUserRouter = require("./api/user");
+
 const fs = require("fs");
 dotenv.config();
 
@@ -21,8 +24,17 @@ const hbs = exphbs.create({
   defaultLayout: "main",
   layoutsDir: __dirname + "/views/layouts",
   partialsDir: __dirname + "/views/partials",
+  helper: {
+    section(name, options) {
+      if (!this._sections) {
+        this._sections = {};
+      }
+      this._sections[name] = options.fn(this);
+      return null;
+    },
+  },
 });
-
+express_handlebars_sections(hbs);
 app.engine("hbs", hbs.engine);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
@@ -40,6 +52,7 @@ app.use(
     secret: "cats",
   })
 );
+app.use("/api/user", apiUserRouter);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function (req, res, next) {
@@ -61,6 +74,7 @@ app.get("/", (req, res) => {
     stylesheet: "styles/readme.css",
     charset: "utf-8",
   };
+
   // Write a header.
   md.render(fileName, opts, function (err) {
     if (err) {

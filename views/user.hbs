@@ -134,22 +134,7 @@
                                                     </thead>
 
 
-                                                    <tbody>
-                                                        {{#each user}}
-                                                        <tr>
-                                                            <td>{{this._id}}</td>
-                                                            <td>{{this.user_name}}</td>
-                                                            <td>{{this.type}}</td>
-                                                            <td>{{this.email}}</td>
-                                                            <td>{{this.gender}}</td>
-                                                            <td>{{this.birthday}}</td>
-                                                            <td>{{this.address}}</td>
-                                                            <td>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-dark">Ban</button>
-                                                            </td>
-                                                        </tr>
-                                                        {{/each}}
+                                                    <tbody id="dataUser">
 
 
                                                     </tbody>
@@ -169,3 +154,77 @@
         </div>
     </div>
 </div>
+
+{{#section 'script'}}
+<script>
+    function loadData() {
+        $.getJSON(`/api/user/listUser`, function (data) {
+            let html = ``;
+            for (const item of data) {
+                if (item.status) {
+                    html += `<tr>
+                                                            <td>${item._id}</td>
+                                                            <td>${item.user_name}</td>
+                                                            <td>${item.type}</td>
+                                                            <td>${item.email}</td>
+                                                            <td>${item.gender}</td>
+                                                            <td>${item.birthday}</td>
+                                                            <td>${item.address}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-outline-dark" onclick="banUser(${item._id})"
+                                                                    >Ban</button>
+                                                            </td>
+                                                        </tr>`
+                }
+                else {
+                    html += `<tr>
+                                                            <td>${item._id}</td>
+                                                            <td>${item.user_name}</td>
+                                                            <td>${item.type}</td>
+                                                            <td>${item.email}</td>
+                                                            <td>${item.gender}</td>
+                                                            <td>${item.birthday}</td>
+                                                            <td>${item.address}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-outline-dark"
+                                                                    style="background-color:red"
+                                                                    onclick="unBanUser(${item._id})">Ban</button>
+                                                            </td>
+                                                        </tr>`
+                }
+            }
+            $('#dataUser').html(html);
+        });
+    }
+    loadData();
+</script>
+<script>
+    function banUser(id) {
+        console.log("hehe")
+        $.ajax({
+            url: `/api/user/banUser/${id}`,
+            type: 'PUT',
+
+            success: function (data) {
+                console.log(data)
+                loadData();
+                alert('Ban OK');
+            }
+        });
+    }
+
+    function unBanUser(id) {
+        console.log("huhu")
+        $.ajax({
+            url: `/api/user/unBanUser/${id}`,
+            type: 'PUT',
+
+            success: function (data) {
+                console.log(data)
+                loadData();
+                alert('unBan OK');
+            }
+        });
+    }
+</script>
+{{/section}}

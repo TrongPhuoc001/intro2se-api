@@ -154,7 +154,10 @@
                         </div>
 
 
-
+                        <button type="button" id="showList" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModalScrollable" style="display:none">
+                            Launch demo modal
+                        </button>
                     </div>
                 </div>
             </div>
@@ -164,7 +167,7 @@
 
 
 <!-- Modal -->
-<div id="showList"></div>
+
 <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -188,35 +191,11 @@
         </div>
     </div>
 </div>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 {{#section 'script'}}
 
-<script>
-    $("#course tr").click(async function () {
-        $(this).addClass('selected').siblings().removeClass('selected');
-        let idCourse = $(this).find('td:first').html();
-        alert(idCourse);
-        let html = ``;
 
-        await $.get(`/course/${idCourse}/user`, function (data) {
-
-            for (let item of data) {
-                html += `<div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Name student</span>
-                        </div>
-                        <input type="text" name="nameUser" class="form-control" aria-label="Default"
-                            aria-describedby="inputGroup-sizing-default" placeholder="Name user" value="${item.user_name}" >
-                    </div>`;
-
-            }
-
-        });
-        console.log(html)
-        $("#form").html(html);
-        $('#exampleModal').trigger('focus')
-    });
-</script>
 
 <script>
     function loadData() {
@@ -229,7 +208,7 @@
 
 
                 $('#datatable').dataTable({
-                    destroy: true,
+                    "bDestroy": true,
                     "aaData": data,
                     columns: [
                         { "data": "_id" },
@@ -293,5 +272,64 @@
             }
         });
     }
+</script>
+{{!--
+<script>
+    $("#course tr").click(async function () {
+        console.log("click")
+        $(this).addClass('selected').siblings().removeClass('selected');
+        let idCourse = $(this).find('td:first').html();
+        alert(idCourse);
+        let html = ``;
+
+        await $.get(`/course/${idCourse}/user`, function (data) {
+
+            for (let item of data) {
+                html += `<div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Name student</span>
+                        </div>
+                        <input type="text" name="nameUser" class="form-control" aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default" placeholder="Name user" value="${item.user_name}">
+                    </div>`;
+
+            }
+
+        });
+        console.log(html)
+        $("#form").html(html);
+        $('#exampleModal').trigger('focus')
+    });
+</script> --}}
+<script>
+    $(document).ready(function () {
+        var table = $('#datatable').DataTable();
+
+        $('#datatable tbody').on('click', 'tr', async function () {
+
+            $(this).addClass('selected').siblings().removeClass('selected');
+            let idCourse = $(this).find('td:first').html();
+            //alert(idCourse);
+            let html = ``;
+
+            await $.get(`/course/${idCourse}/user`, function (data) {
+
+                for (let item of data) {
+                    html += `<div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Name student</span>
+                        </div>
+                        <input type="text" name="nameUser" class="form-control" aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default" placeholder="Name user" value="${item.user_name}">
+                    </div>`;
+
+                }
+
+            });
+            console.log(html)
+            $("#form").html(html);
+            $('#showList').click();
+        });
+    });
 </script>
 {{/section}}

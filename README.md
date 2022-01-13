@@ -114,6 +114,12 @@ Response.body :
     - Type: 1 teacher
     - Type: 2 student
 
+If account was banned
+
+```javascript
+ "message": "Account was banned!",
+```
+
 add token in request.header with "auth" key for other user and course api
 
 ### User courses - on studying
@@ -192,12 +198,14 @@ OUT PUT
     - curr_state: 1 course is in time studying
     - curr_state: 2 course was end
 
-### Fee 
+### Fee
+
 URL : "https://intro2se-api.herokuapp.com/user/:user_id/fee "
 METHOD: GET  
 TOKEN: REQUIRE  
 Example : "https://intro2se-api.herokuapp.com/user/6/fee "  
-OUT PUT  
+OUT PUT
+
 ```javascript
 {
     "course": [
@@ -225,6 +233,7 @@ OUT PUT
     "sum": "$15,000,000.00"
 }
 ```
+
 ### Delete user
 
 URL : "https://intro2se-api.herokuapp.com/user/:user_id/delete "  
@@ -367,126 +376,126 @@ OUT PUT
 
 ```javascript
 [
-    {
-        "_id": 6,
-        "course_name": "Độ phức tạp thuật toán",
-        "subject_name": "Khoa học máy tính",
-        "color": "#C1AC95",
-        "teacher_id": 3,
-        "teacher_name": "Giáo Viên 3",
-        "time_start": "07:30:00",
-        "time_end": "10:30:00",
-        "day_study": 5,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 7,
-        "course_name": "Mạng Máy Tính",
-        "subject_name": "Mạng Máy tính",
-        "color": "#F2F4D1",
-        "teacher_id": 4,
-        "teacher_name": "Giáo Viên 4",
-        "time_start": "07:30:00",
-        "time_end": "10:30:00",
-        "day_study": 5,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 8,
-        "course_name": "Hệ thống viễn thông",
-        "subject_name": "Mạng Máy tính",
-        "color": "#F2F4D1",
-        "teacher_id": 4,
-        "teacher_name": "Giáo Viên 4",
-        "time_start": "07:30:00",
-        "time_end": "10:30:00",
-        "day_study": 2,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 9,
-        "course_name": "Nhập Môn Công Nghệ Phần Mềm",
-        "subject_name": "Phần Mềm",
-        "color": "#89A3B2",
-        "teacher_id": 1,
-        "teacher_name": "Giáo Viên 1",
-        "time_start": "07:30:00",
-        "time_end": "10:30:00",
-        "day_study": 2,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 10,
-        "course_name": "Kiến Trúc Phần Mềm",
-        "subject_name": "Phần Mềm",
-        "color": "#89A3B2",
-        "teacher_id": 1,
-        "teacher_name": "Giáo Viên 1",
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 5,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 11,
-        "course_name": "Cơ sở trí tuệ nhân tạo",
-        "subject_name": "Trí tuệ nhân tạo",
-        "color": "#F6EABE",
-        "teacher_id": 5,
-        "teacher_name": "Giáo Viên 5",
-        "time_start": "07:30:00",
-        "time_end": "10:30:00",
-        "day_study": 6,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 12,
-        "course_name": "Nhập môn học máy",
-        "subject_name": "Trí tuệ nhân tạo",
-        "color": "#F6EABE",
-        "teacher_id": 5,
-        "teacher_name": "Giáo Viên 5",
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 6,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 13,
-        "course_name": "Mã hóa ứng dụng",
-        "subject_name": "An Toàn Thông Tin",
-        "color": "#B5CDA3",
-        "teacher_id": 4,
-        "teacher_name": "Giáo Viên 4",
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 5,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 14,
-        "course_name": "Nhập môn mã hóa - mật mã",
-        "subject_name": "An Toàn Thông Tin",
-        "color": "#B5CDA3",
-        "teacher_id": 4,
-        "teacher_name": "Giáo Viên 4",
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 6,
-        "day_start": "2021-08-24"
-    },
-    {
-        "_id": 20,
-        "course_name": "Hệ Điều Hành",
-        "subject_name": "Hệ thống máy tính",
-        "color": "#C9E4C5",
-        "teacher_id": 3,
-        "teacher_name": "Giáo Viên 3",
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 3,
-        "day_start": "2021-08-24"
-    }
+  {
+    _id: 6,
+    course_name: "Độ phức tạp thuật toán",
+    subject_name: "Khoa học máy tính",
+    color: "#C1AC95",
+    teacher_id: 3,
+    teacher_name: "Giáo Viên 3",
+    time_start: "07:30:00",
+    time_end: "10:30:00",
+    day_study: 5,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 7,
+    course_name: "Mạng Máy Tính",
+    subject_name: "Mạng Máy tính",
+    color: "#F2F4D1",
+    teacher_id: 4,
+    teacher_name: "Giáo Viên 4",
+    time_start: "07:30:00",
+    time_end: "10:30:00",
+    day_study: 5,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 8,
+    course_name: "Hệ thống viễn thông",
+    subject_name: "Mạng Máy tính",
+    color: "#F2F4D1",
+    teacher_id: 4,
+    teacher_name: "Giáo Viên 4",
+    time_start: "07:30:00",
+    time_end: "10:30:00",
+    day_study: 2,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 9,
+    course_name: "Nhập Môn Công Nghệ Phần Mềm",
+    subject_name: "Phần Mềm",
+    color: "#89A3B2",
+    teacher_id: 1,
+    teacher_name: "Giáo Viên 1",
+    time_start: "07:30:00",
+    time_end: "10:30:00",
+    day_study: 2,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 10,
+    course_name: "Kiến Trúc Phần Mềm",
+    subject_name: "Phần Mềm",
+    color: "#89A3B2",
+    teacher_id: 1,
+    teacher_name: "Giáo Viên 1",
+    time_start: "12:30:00",
+    time_end: "16:30:00",
+    day_study: 5,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 11,
+    course_name: "Cơ sở trí tuệ nhân tạo",
+    subject_name: "Trí tuệ nhân tạo",
+    color: "#F6EABE",
+    teacher_id: 5,
+    teacher_name: "Giáo Viên 5",
+    time_start: "07:30:00",
+    time_end: "10:30:00",
+    day_study: 6,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 12,
+    course_name: "Nhập môn học máy",
+    subject_name: "Trí tuệ nhân tạo",
+    color: "#F6EABE",
+    teacher_id: 5,
+    teacher_name: "Giáo Viên 5",
+    time_start: "12:30:00",
+    time_end: "16:30:00",
+    day_study: 6,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 13,
+    course_name: "Mã hóa ứng dụng",
+    subject_name: "An Toàn Thông Tin",
+    color: "#B5CDA3",
+    teacher_id: 4,
+    teacher_name: "Giáo Viên 4",
+    time_start: "12:30:00",
+    time_end: "16:30:00",
+    day_study: 5,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 14,
+    course_name: "Nhập môn mã hóa - mật mã",
+    subject_name: "An Toàn Thông Tin",
+    color: "#B5CDA3",
+    teacher_id: 4,
+    teacher_name: "Giáo Viên 4",
+    time_start: "12:30:00",
+    time_end: "16:30:00",
+    day_study: 6,
+    day_start: "2021-08-24",
+  },
+  {
+    _id: 20,
+    course_name: "Hệ Điều Hành",
+    subject_name: "Hệ thống máy tính",
+    color: "#C9E4C5",
+    teacher_id: 3,
+    teacher_name: "Giáo Viên 3",
+    time_start: "12:30:00",
+    time_end: "16:30:00",
+    day_study: 3,
+    day_start: "2021-08-24",
+  },
 ];
 ```
 
@@ -508,32 +517,32 @@ OUT PUT
 
 ```javascript
 [
-    {
-        "_id": 1,
-        "course_name": "Kĩ Thuật Lập TrÌnh",
-        "subject_name": "Lập TrÌnh",
-        "color": "#ADC2A9",
-        "time_start": "12:30:00",
-        "time_end": "16:30:00",
-        "day_study": 4,
-        "day_start": "2021-08-24",
-        "day_end": "2021-12-23T17:00:00.000Z",
-        "curr_state": 1,
-        "fee": "$3,000,000.00"
-    },
-    {
-        "_id": 2,
-        "course_name": "Lập TrÌnh Hướng Đối Tượng",
-        "subject_name": "Lập TrÌnh",
-        "color": "#ADC2A9",
-        "time_start": "07:30:00",
-        "time_end": "10:30:00",
-        "day_study": 3,
-        "day_start": "2021-08-24",
-        "day_end": "2021-12-23T17:00:00.000Z",
-        "curr_state": 1,
-        "fee": "$3,000,000.00"
-    }
+  {
+    _id: 1,
+    course_name: "Kĩ Thuật Lập TrÌnh",
+    subject_name: "Lập TrÌnh",
+    color: "#ADC2A9",
+    time_start: "12:30:00",
+    time_end: "16:30:00",
+    day_study: 4,
+    day_start: "2021-08-24",
+    day_end: "2021-12-23T17:00:00.000Z",
+    curr_state: 1,
+    fee: "$3,000,000.00",
+  },
+  {
+    _id: 2,
+    course_name: "Lập TrÌnh Hướng Đối Tượng",
+    subject_name: "Lập TrÌnh",
+    color: "#ADC2A9",
+    time_start: "07:30:00",
+    time_end: "10:30:00",
+    day_study: 3,
+    day_start: "2021-08-24",
+    day_end: "2021-12-23T17:00:00.000Z",
+    curr_state: 1,
+    fee: "$3,000,000.00",
+  },
 ];
 ```
 

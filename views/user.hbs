@@ -159,6 +159,7 @@
 <script>
     function loadData() {
         $.getJSON(`/api/user/listUser`, function (data) {
+            console.log(data);
             let html = ``;
             for (const item of data) {
                 if (item.status) {

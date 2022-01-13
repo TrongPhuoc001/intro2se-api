@@ -66,8 +66,9 @@ exports.postLogin = async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({ message: "Email or password is invalid" });
     }
-    if (user.status == false) {
-      return res.status(400).json({ message: "Account Was Ban!" });
+
+    if (!user.status) {
+      return res.status(400).json({ message: "Account was banned" });
     }
 
     const token = jwt.sign(

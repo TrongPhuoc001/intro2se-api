@@ -69,7 +69,8 @@ create table course(
 	fee money NOT NULL,
     curr_state smallint DEFAULT 0,
     create_time timestamp DEFAULT NOW(),
-	status BOOLEAN NOT NULL
+	status BOOLEAN NOT NULL,
+	requirement TEXT
 );
 
 create table student_course(

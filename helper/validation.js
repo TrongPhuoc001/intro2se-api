@@ -32,7 +32,10 @@ const courseValid = data => {
         day_end : Joi.date(),
         max_slot : Joi.number().integer().min(1),
         fee : Joi.number().integer(),
-    }); 
+        description : Joi.string(),
+        room : Joi.string(),
+        requirement : Joi.string(),
+    }).options({ allowUnknown: true }); 
     return schema.validate(data);
 }
 

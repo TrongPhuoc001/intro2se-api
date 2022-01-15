@@ -95,6 +95,8 @@ exports.postCourse = async (req, res) => {
       day_end,
       max_slot,
       fee,
+      room,
+      requirement
     } = req.body;
     try {
       await courseModel.addCourse(
@@ -108,7 +110,9 @@ exports.postCourse = async (req, res) => {
         day_start,
         day_end,
         max_slot,
-        fee
+        fee,
+        room,
+        requirement
       );
       return res.status(200).json({ message: "create success" });
     } catch (err) {

@@ -30,6 +30,8 @@ const courseValid = data => {
         day_study : Joi.number().integer().max(8).min(2),
         max_slot : Joi.number().integer().min(1),
         fee : Joi.number().integer(),
+        room: Joi.string().required,
+        requirement: Joi.string
     }); 
     return schema.validate(data);
 }

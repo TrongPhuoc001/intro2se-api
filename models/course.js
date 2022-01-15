@@ -100,11 +100,13 @@ exports.addCourse = (
   day_start,
   day_end,
   max_slot,
-  fee
+  fee,
+  room,
+  requirement
 ) => {
   return pool.query(
-    `INSERT INTO course(course_name, teacher_id, subject_id,description ,time_start, time_end, day_study, day_start, day_end, max_slot,fee)
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11);`,
+    `INSERT INTO course(course_name, teacher_id, subject_id,description ,time_start, time_end, day_study, day_start, day_end, max_slot,fee,room,requirement)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13);`,
     [
       course_name,
       teacher_id,
@@ -117,6 +119,8 @@ exports.addCourse = (
       day_end,
       max_slot,
       fee,
+      room,
+      requirement
     ]
   );
 };

@@ -23,7 +23,8 @@ create table public."user"(
 	gender VARCHAR(255) NOT NULL,
 	birthday date NOT NULL,
 	address VARCHAR(255) DEFAULT 'Viet Nam',
-	status BOOLEAN NOT NULL
+	status BOOLEAN DEFAULT t,
+	verify BOOLEAN DEFAULT f
 );
 
 create table "admin"(

@@ -1,6 +1,7 @@
 const pool = require("../config/dbconnect");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const sendEmail = require('../helper/sendMail');
 const { registerValid, loginValid } = require("../helper/validation");
 
 const courseModel = require("../models/course");
@@ -70,7 +71,9 @@ exports.postLogin = async (req, res) => {
     if (!user.status) {
       return res.status(400).json({ message: "Account was banned" });
     }
-
+    if(!user.verify){
+      return res.status(400).json({ message: "Please verify your email" });
+    }
     const token = jwt.sign(
       { _id: user._id, type: user.type },
       process.env.TOKEN_SECRET
@@ -95,21 +98,22 @@ exports.postRegister = async (req, res) => {
     if (result.rows.length > 0) {
       return res.status(400).json({ message: "email has already been taken" });
     }
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      await userModel.addUser(
-        name,
-        email,
-        hashedPassword,
-        type,
-        gender,
-        birthday
-      );
-      return res.status(200).json({ message: "Account create successful" });
-    } catch (err) {
-      return res.status(400).json(err);
-    }
-  } catch (err) {
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const id = await userModel.addUser(
+      name,
+      email,
+      hashedPassword,
+      type,
+      gender,
+      birthday
+    );
+    console.log(id.rows[0]);
+    const baseurl =  req.protocol + '://' + req.get('host') + '/user/confirm/';
+    sendEmail(id.rows[0]._id,email,baseurl)
+    return res.status(200).json({ message: "Account create successful, please confirm email." });
+  } 
+  catch (err) {
     return res.status(400).json(err);
   }
 };
@@ -163,3 +167,17 @@ exports.getFee = async (req, res) => {
       .json({ course: courseFee.rows, sum: sumFee.rows[0].sum });
   }
 };
+
+exports.confirmEmail = async(req,res)=>{
+  const token = req.params.token;
+  try{
+    const {id} = jwt.verify(token,process.env.TOKEN_SECRET);
+    await userModel.confirm(id);
+    res.render('confirmEmail',{
+      layout:false
+    });
+  }   
+  catch(e){
+      res.send('error');
+  }
+}

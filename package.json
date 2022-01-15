@@ -23,6 +23,7 @@
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "markdown-to-html": "0.0.13",
+    "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",

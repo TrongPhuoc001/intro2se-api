@@ -20,7 +20,7 @@ exports.findAll = (page) => {
 exports.addUser = (name, email, hashedPassword, type, gender, birthday) => {
   return pool.query(
     `INSERT INTO "user"(user_name,email,password,type, gender, birthday)
-        VALUES ($1,$2,$3,$4,$5,$6);`,
+        VALUES ($1,$2,$3,$4,$5,$6) RETURNING _id;`,
     [name, email, hashedPassword, parseInt(type), gender, birthday]
   );
 };
@@ -96,3 +96,9 @@ exports.unBanUser = (user_id) => {
     [user_id]
   );
 };
+
+exports.confirm = (user_id)=>{
+  return pool.query(
+    `UPDATE "user" SET verify= true WHERE _id=$1;`,[user_id]
+  )
+}
